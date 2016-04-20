@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.remote;
 
 import android.util.Log;
 

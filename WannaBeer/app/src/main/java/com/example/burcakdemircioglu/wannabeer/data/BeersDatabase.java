@@ -1,9 +1,10 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static com.example.burcakdemircioglu.wannabeer.BeersProvider.Tables;
+
+import static com.example.burcakdemircioglu.wannabeer.data.BeersProvider.Tables;
 
 /**
  * Created by burcakdemircioglu on 19/04/16.

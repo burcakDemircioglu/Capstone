@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.ui;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -22,6 +22,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.data.UpdaterService;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{

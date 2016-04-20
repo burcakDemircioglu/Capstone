@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.data;
 
 import android.content.ContentValues;
 import android.database.Cursor;

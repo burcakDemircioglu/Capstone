@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.data;
 
 import android.app.IntentService;
 import android.content.ContentProviderOperation;
@@ -11,6 +11,8 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.text.format.Time;
 import android.util.Log;
+
+import com.example.burcakdemircioglu.wannabeer.remote.RemoteEndpointUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

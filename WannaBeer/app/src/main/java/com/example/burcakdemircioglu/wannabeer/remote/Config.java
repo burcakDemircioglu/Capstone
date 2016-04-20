@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.remote;
 
 import java.net.MalformedURLException;
 import java.net.URL;
