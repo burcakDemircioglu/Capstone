@@ -23,22 +23,20 @@ public class InfoLoader extends CursorLoader {
     public interface Query {
         String[] PROJECTION = {
                 BeersContact.Items._ID,
-                BeersContact.Items.TITLE,
-                BeersContact.Items.PUBLISHED_DATE,
-                BeersContact.Items.AUTHOR,
-                BeersContact.Items.THUMB_URL,
-                BeersContact.Items.PHOTO_URL,
-                BeersContact.Items.ASPECT_RATIO,
-                BeersContact.Items.BODY,
+                BeersContact.Items.NAME,
+                BeersContact.Items.PHOTO,
+                BeersContact.Items.KIND,
+                BeersContact.Items.COUNTRY,
+                BeersContact.Items.ALCOHOL_PERCENTAGE,
+                BeersContact.Items.DESCRIPTION,
         };
 
         int _ID = 0;
-        int TITLE = 1;
-        int PUBLISHED_DATE = 2;
-        int AUTHOR = 3;
-        int THUMB_URL = 4;
-        int PHOTO_URL = 5;
-        int ASPECT_RATIO = 6;
-        int BODY = 7;
+        int NAME = 1;
+        int PHOTO = 2;
+        int KIND = 3;
+        int COUNTRY = 4;
+        int ALCOHOL_PERCENTAGE = 6;
+        int DESCRIPTION = 7;
     }
 }

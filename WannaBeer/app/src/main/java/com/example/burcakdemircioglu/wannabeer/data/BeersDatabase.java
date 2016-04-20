@@ -22,13 +22,12 @@ public class BeersDatabase extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + Tables.ITEMS + " ("
                 + BeersContact.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BeersContact.ItemsColumns.SERVER_ID + " TEXT,"
-                + BeersContact.ItemsColumns.TITLE + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.AUTHOR + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.BODY + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.THUMB_URL + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.PHOTO_URL + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.ASPECT_RATIO + " REAL NOT NULL DEFAULT 1.5,"
-                + BeersContact.ItemsColumns.PUBLISHED_DATE + " INTEGER NOT NULL DEFAULT 0"
+                + BeersContact.ItemsColumns.NAME + " TEXT NOT NULL,"
+                + BeersContact.ItemsColumns.PHOTO + " TEXT NOT NULL,"
+                + BeersContact.ItemsColumns.KIND + " TEXT NOT NULL,"
+                + BeersContact.ItemsColumns.COUNTRY + " TEXT NOT NULL,"
+                + BeersContact.ItemsColumns.ALCOHOL_PERCENTAGE + " REAL NOT NULL DEFAULT 1.5,"
+                + BeersContact.ItemsColumns.DESCRIPTION + " TEXT NOT NULL"
                 + ")" );
     }
 

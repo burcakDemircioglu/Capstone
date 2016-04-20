@@ -67,16 +67,16 @@ public class UpdaterService extends IntentService {
                 ContentValues values = new ContentValues();
                 JSONObject object = array.getJSONObject(i);
                 values.put(BeersContact.Items.SERVER_ID, object.getString("id" ));
-                values.put(BeersContact.Items.AUTHOR, object.getString("author" ));
-                values.put(BeersContact.Items.TITLE, object.getString("title" ));
-                values.put(BeersContact.Items.BODY, object.getString("body" ));
-                values.put(BeersContact.Items.THUMB_URL, object.getString("thumb" ));
-                values.put(BeersContact.Items.PHOTO_URL, object.getString("photo" ));
-                values.put(BeersContact.Items.ASPECT_RATIO, object.getString("aspect_ratio" ));
-                time.parse3339(object.getString("published_date"));
-                values.put(BeersContact.Items.PUBLISHED_DATE, time.toMillis(false));
+                values.put(BeersContact.Items.NAME, object.getString("name" ));
+                values.put(BeersContact.Items.PHOTO, object.getString("photo" ));
+                values.put(BeersContact.Items.KIND, object.getString("kind" ));
+                values.put(BeersContact.Items.COUNTRY, object.getString("country" ));
+                values.put(BeersContact.Items.ALCOHOL_PERCENTAGE, object.getString("alcoholPercentage" ));
+                //values.put(BeersContact.Items.LOCATION, object.getString("location" ));
+                values.put(BeersContact.Items.DESCRIPTION, object.getString("description" ));
+
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                Log.v("json",object.getString("title"));
+                Log.v("json",object.getString("name"));
             }
 
             getContentResolver().applyBatch(BeersContact.CONTENT_AUTHORITY, cpo);

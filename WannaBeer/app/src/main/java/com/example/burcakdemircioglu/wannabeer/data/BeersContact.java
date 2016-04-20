@@ -15,26 +15,24 @@ public class BeersContact {
         /** Type: TEXT */
         String SERVER_ID = "server_id";
         /** Type: TEXT NOT NULL */
-        String TITLE = "title";
+        String NAME = "name";
         /** Type: TEXT NOT NULL */
-        String AUTHOR = "author";
+        String PHOTO = "photo";
         /** Type: TEXT NOT NULL */
-        String BODY = "body";
+        String KIND = "kind";
         /** Type: TEXT NOT NULL */
-        String THUMB_URL = "thumb_url";
-        /** Type: TEXT NOT NULL */
-        String PHOTO_URL = "photo_url";
+        String COUNTRY = "country";
         /** Type: REAL NOT NULL DEFAULT 1.5 */
-        String ASPECT_RATIO = "aspect_ratio";
-        /** Type: INTEGER NOT NULL DEFAULT 0 */
-        String PUBLISHED_DATE = "published_date";
+        String ALCOHOL_PERCENTAGE = "alcoholPercentage";
+        /** Type: TEXT NOT NULL */
+        String DESCRIPTION = "description";
     }
 
     public static class Items implements ItemsColumns {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.beers";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.beers";
 
-        public static final String DEFAULT_SORT = PUBLISHED_DATE + " DESC";
+        public static final String DEFAULT_SORT = NAME + " ASC";
 
         /** Matches: /items/ */
         public static Uri buildDirUri() {
