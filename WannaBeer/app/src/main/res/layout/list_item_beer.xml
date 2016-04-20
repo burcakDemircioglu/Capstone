@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/cardMargin"
+    android:layout_marginRight="@dimen/cardMargin"
+    android:layout_marginTop="@dimen/cardMargin"
+    android:layout_marginBottom="@dimen/cardMargin"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <!--suppress AndroidLintContentDescription -->
+        <TextView
+            android:id="@+id/article_title"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/cardTextViewPadding"
+            android:paddingTop="@dimen/cardTextViewPadding"
+            android:paddingRight="@dimen/cardTextViewPadding"
+            android:paddingBottom="@dimen/cardTextViewPaddingBottom"
+            android:textColor="@color/text_color"
+            android:ellipsize="end"
+            android:maxLines="4" />
+
+        <TextView
+            android:id="@+id/article_subtitle"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/cardTextViewPadding"
+            android:paddingRight="@dimen/cardTextViewPadding"
+            android:paddingBottom="@dimen/cardTextViewPadding"
+            android:textColor="@color/text_color_subtitle"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
