@@ -167,15 +167,16 @@ public class MainActivity extends AppCompatActivity implements
             holder.titleView.setText(mCursor.getString(InfoLoader.Query.NAME));
 
             holder.subtitleView.setText(mCursor.getString(InfoLoader.Query.KIND));
-            /*
+
             holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-            holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ALCOHOL_PERCENTAGE));
+                    mCursor.getString(InfoLoader.Query.PHOTO),
+                    ImageLoaderHelper.getInstance(MainActivity.this).getImageLoader());
+
+            //holder.thumbnailView.setAspectRatio((float)1.5);
             holder.thumbnailView.setTransitionName(Integer.toString(position));
             holder.thumbnailView.setTag(Integer.toString(position));
-            */
-            Log.e("positionTransNameInList", Integer.toString(position));
+
+           // Log.e("positionTransNameInList", Integer.toString(position));
 
             holder.titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
             holder.subtitleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
@@ -191,13 +192,13 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-       // public DynamicHeightNetworkImageView thumbnailView;
+        public DynamicHeightNetworkImageView thumbnailView;
         public TextView titleView;
         public TextView subtitleView;
 
         public ViewHolder(View view) {
             super(view);
-          //  thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
+            thumbnailView = (DynamicHeightNetworkImageView) view.findViewById(R.id.thumbnail);
             titleView = (TextView) view.findViewById(R.id.article_title);
             subtitleView = (TextView) view.findViewById(R.id.article_subtitle);
         }

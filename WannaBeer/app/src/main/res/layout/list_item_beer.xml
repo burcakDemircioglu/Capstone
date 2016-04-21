@@ -18,6 +18,14 @@
         >
 
         <!--suppress AndroidLintContentDescription -->
+        <com.example.burcakdemircioglu.wannabeer.ui.DynamicHeightNetworkImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/bannerbackground"
+            android:background="@color/image_background"
+            android:scaleType="centerCrop"
+            />
         <TextView
             android:id="@+id/article_title"
             style="@style/TextAppearance.AppCompat.Subhead"
