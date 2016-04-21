@@ -50,6 +50,6 @@ public class BeersContact {
         }
     }
 
-    //private BeerContract() {
+    //private BeersContract() {
     //}
 }

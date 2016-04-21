@@ -129,7 +129,7 @@ public class BeerDetailFragment extends Fragment implements
         });
 
         mScrollView = (ObservableScrollView) mRootView.findViewById(R.id.scrollview);
-        /*
+
         mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
             @Override
             public void onScrollChanged() {
@@ -139,7 +139,7 @@ public class BeerDetailFragment extends Fragment implements
                 updateStatusBar();
             }
         });
-*/
+
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoView.setTransitionName(Integer.toString(mPosition));
         //Log.e("onClickTransNameDetail", Integer.toString(mPosition));
@@ -212,7 +212,7 @@ public class BeerDetailFragment extends Fragment implements
             titleView.setText(mCursor.getString(InfoLoader.Query.NAME));
             bylineView.setText(mCursor.getString(InfoLoader.Query.KIND));
 
-            bodyView.setText(mCursor.getString(InfoLoader.Query.COUNTRY));
+            bodyView.setText(mCursor.getString(InfoLoader.Query.DESCRIPTION));
 
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {

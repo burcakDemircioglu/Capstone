@@ -76,7 +76,7 @@ public class UpdaterService extends IntentService {
                 values.put(BeersContact.Items.DESCRIPTION, object.getString("description" ));
 
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                Log.v("json",object.getString("name"));
+                //Log.v("json",object.getString("description"));
             }
 
             getContentResolver().applyBatch(BeersContact.CONTENT_AUTHORITY, cpo);

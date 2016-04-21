@@ -36,7 +36,7 @@ public class InfoLoader extends CursorLoader {
         int PHOTO = 2;
         int KIND = 3;
         int COUNTRY = 4;
-        int ALCOHOL_PERCENTAGE = 6;
-        int DESCRIPTION = 7;
+        int ALCOHOL_PERCENTAGE = 5;
+        int DESCRIPTION = 6;
     }
 }
