@@ -26,8 +26,10 @@ public class InfoLoader extends CursorLoader {
                 BeersContact.Items.NAME,
                 BeersContact.Items.PHOTO,
                 BeersContact.Items.KIND,
+                BeersContact.Items.BOTTLE,
                 BeersContact.Items.COUNTRY,
                 BeersContact.Items.ALCOHOL_PERCENTAGE,
+                BeersContact.Items.LOCATION,
                 BeersContact.Items.DESCRIPTION,
         };
 
@@ -35,8 +37,10 @@ public class InfoLoader extends CursorLoader {
         int NAME = 1;
         int PHOTO = 2;
         int KIND = 3;
-        int COUNTRY = 4;
-        int ALCOHOL_PERCENTAGE = 5;
-        int DESCRIPTION = 6;
+        int BOTTLE=4;
+        int COUNTRY = 5;
+        int ALCOHOL_PERCENTAGE = 6;
+        int LOCATION=7;
+        int DESCRIPTION = 8;
     }
 }

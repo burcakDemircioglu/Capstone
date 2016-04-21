@@ -70,9 +70,10 @@ public class UpdaterService extends IntentService {
                 values.put(BeersContact.Items.NAME, object.getString("name" ));
                 values.put(BeersContact.Items.PHOTO, object.getString("photo" ));
                 values.put(BeersContact.Items.KIND, object.getString("kind" ));
+                values.put(BeersContact.Items.BOTTLE, object.getString("bottle" ));
                 values.put(BeersContact.Items.COUNTRY, object.getString("country" ));
                 values.put(BeersContact.Items.ALCOHOL_PERCENTAGE, object.getString("alcoholPercentage" ));
-                //values.put(BeersContact.Items.LOCATION, object.getString("location" ));
+                values.put(BeersContact.Items.LOCATION, object.getString("location" ));
                 values.put(BeersContact.Items.DESCRIPTION, object.getString("description" ));
 
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());

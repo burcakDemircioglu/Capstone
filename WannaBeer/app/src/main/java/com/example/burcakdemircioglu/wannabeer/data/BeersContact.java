@@ -21,9 +21,13 @@ public class BeersContact {
         /** Type: TEXT NOT NULL */
         String KIND = "kind";
         /** Type: TEXT NOT NULL */
+        String BOTTLE = "bottle";
+        /** Type: TEXT NOT NULL */
         String COUNTRY = "country";
         /** Type: REAL NOT NULL DEFAULT 1.5 */
         String ALCOHOL_PERCENTAGE = "alcoholPercentage";
+        /** Type: TEXT */
+        String LOCATION = "location";
         /** Type: TEXT NOT NULL */
         String DESCRIPTION = "description";
     }

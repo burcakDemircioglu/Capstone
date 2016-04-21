@@ -26,7 +26,7 @@
                     android:background="@color/image_background"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_photo_height"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     />
                 <!--
                                 <View

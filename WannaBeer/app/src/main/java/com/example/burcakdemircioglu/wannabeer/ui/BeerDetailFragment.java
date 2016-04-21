@@ -215,7 +215,7 @@ public class BeerDetailFragment extends Fragment implements
             bodyView.setText(mCursor.getString(InfoLoader.Query.DESCRIPTION));
 
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {
+                    .get(mCursor.getString(InfoLoader.Query.BOTTLE), new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();

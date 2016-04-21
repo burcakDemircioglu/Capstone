@@ -25,8 +25,10 @@ public class BeersDatabase extends SQLiteOpenHelper {
                 + BeersContact.ItemsColumns.NAME + " TEXT NOT NULL,"
                 + BeersContact.ItemsColumns.PHOTO + " TEXT NOT NULL,"
                 + BeersContact.ItemsColumns.KIND + " TEXT NOT NULL,"
+                + BeersContact.ItemsColumns.BOTTLE + " TEXT NOT NULL,"
                 + BeersContact.ItemsColumns.COUNTRY + " TEXT NOT NULL,"
                 + BeersContact.ItemsColumns.ALCOHOL_PERCENTAGE + " REAL NOT NULL DEFAULT 1.5,"
+                + BeersContact.ItemsColumns.LOCATION + " TEXT,"
                 + BeersContact.ItemsColumns.DESCRIPTION + " TEXT NOT NULL"
                 + ")" );
     }
