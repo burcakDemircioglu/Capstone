@@ -1,7 +1,9 @@
 package com.example.burcakdemircioglu.wannabeer.ui;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.LoaderManager;
+import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +25,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.data.BeersContact;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.data.UpdaterService;
+
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor>{
@@ -32,6 +38,49 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
 
+    static final String EXTRA_STARTING_ALBUM_POSITION = "extra_starting_item_position";
+    static final String EXTRA_CURRENT_ALBUM_POSITION = "extra_current_item_position";
+
+    private Bundle mTmpReenterState;
+
+    private final SharedElementCallback mCallback = new SharedElementCallback() {
+        @Override
+        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+            if (mTmpReenterState != null) {
+                int startingPosition = mTmpReenterState.getInt(EXTRA_STARTING_ALBUM_POSITION);
+                int currentPosition = mTmpReenterState.getInt(EXTRA_CURRENT_ALBUM_POSITION);
+                if (startingPosition != currentPosition) {
+                    // If startingPosition != currentPosition the user must have swiped to a
+                    // different page in the DetailsActivity. We must update the shared element
+                    // so that the correct one falls into place.
+                    String newTransitionName = Integer.toString(currentPosition);
+                    View newSharedElement = mRecyclerView.findViewWithTag(newTransitionName);
+                    if (newSharedElement != null) {
+                        names.clear();
+                        names.add(newTransitionName);
+                        //Log.e("control", newTransitionName);
+
+                        sharedElements.clear();
+                        sharedElements.put(newTransitionName, newSharedElement);
+                    }
+                }
+
+                mTmpReenterState = null;
+            } else {
+                // If mTmpReenterState is null, then the activity is exiting.
+                View navigationBar = findViewById(android.R.id.navigationBarBackground);
+                View statusBar = findViewById(android.R.id.statusBarBackground);
+                if (navigationBar != null) {
+                    names.add(navigationBar.getTransitionName());
+                    sharedElements.put(navigationBar.getTransitionName(), navigationBar);
+                }
+                if (statusBar != null) {
+                    names.add(statusBar.getTransitionName());
+                    sharedElements.put(statusBar.getTransitionName(), statusBar);
+                }
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,18 +187,18 @@ public class MainActivity extends AppCompatActivity implements
                 @Override
                 public void onClick(View view) {
 
-                   // final View sharedView=view.findViewById(R.id.thumbnail);
-/*
+                    final View sharedView=view.findViewById(R.id.thumbnail);
+
                     Bundle bundle= ActivityOptions.makeSceneTransitionAnimation(
                             thisActivity,
                             sharedView,
                             sharedView.getTransitionName())
                             .toBundle();
-                    //Log.e("onClickTransitionName", sharedView.getTransitionName());
+                    Log.e("AdapterPosition", String.valueOf(getItemId(vh.getAdapterPosition())));
                     Intent intent=new Intent(Intent.ACTION_VIEW,
                             BeersContact.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                     startActivity(intent, bundle);
-*/
+
                     //startActivity(intent);
                 }
             });

@@ -29,8 +29,8 @@ public class BeersContact {
     }
 
     public static class Items implements ItemsColumns {
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.beers";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.beers";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.items";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.items";
 
         public static final String DEFAULT_SORT = NAME + " ASC";
 
