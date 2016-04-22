@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/bannerbackground"
             android:background="@color/image_background"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             />
         <TextView
             android:id="@+id/article_title"

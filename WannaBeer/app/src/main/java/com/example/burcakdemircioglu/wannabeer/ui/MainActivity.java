@@ -214,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements
         public void onBindViewHolder(ViewHolder holder, int position) {
             mCursor.moveToPosition(position);
             holder.titleView.setText(mCursor.getString(InfoLoader.Query.NAME));
-
-            holder.subtitleView.setText(mCursor.getString(InfoLoader.Query.KIND));
+            String subtitle=mCursor.getString(InfoLoader.Query.KIND)+" - "+mCursor.getString(InfoLoader.Query.ALCOHOL_PERCENTAGE)+"%";
+            holder.subtitleView.setText(subtitle);
 
             holder.thumbnailView.setImageUrl(
                     mCursor.getString(InfoLoader.Query.PHOTO),

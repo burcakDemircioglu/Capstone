@@ -47,6 +47,8 @@ public class BeerDetailFragment extends Fragment implements
     private int mTopInset;
     private View mPhotoContainerView;
     private ImageView mPhotoView;
+    private ImageView mFlagView;
+
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
@@ -199,20 +201,29 @@ public class BeerDetailFragment extends Fragment implements
 
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
+        TextView locationView=(TextView) mRootView.findViewById(R.id.article_location);
+        TextView countryView=(TextView)mRootView.findViewById(R.id.article_country);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
+        locationView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
         titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
         bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
+        countryView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
+        mFlagView=(ImageView)mRootView.findViewById(R.id.article_country_flag);
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             titleView.setText(mCursor.getString(InfoLoader.Query.NAME));
-            bylineView.setText(mCursor.getString(InfoLoader.Query.KIND));
+            countryView.setText(mCursor.getString(InfoLoader.Query.COUNTRY));
+            String byLine=mCursor.getString(InfoLoader.Query.KIND)+" - "+mCursor.getString(InfoLoader.Query.ALCOHOL_PERCENTAGE)+"%";
+            bylineView.setText(byLine);
 
             bodyView.setText(mCursor.getString(InfoLoader.Query.DESCRIPTION));
+            String location= "Location: "+mCursor.getString(InfoLoader.Query.LOCATION);
+            locationView.setText(location);
 
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(InfoLoader.Query.BOTTLE), new ImageLoader.ImageListener() {
@@ -225,6 +236,24 @@ public class BeerDetailFragment extends Fragment implements
                                 mPhotoView.setImageBitmap(imageContainer.getBitmap());
                                 mRootView.findViewById(R.id.meta_bar)
                                         .setBackgroundColor(mMutedColor);
+                                updateStatusBar();
+                            }
+                        }
+
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+
+                        }
+                    });
+
+            String flagURL= "https://dl.dropboxusercontent.com/u/58097303/wannabeer/images/flags/"+mCursor.getString(InfoLoader.Query.COUNTRY)+".png";
+            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+                    .get(flagURL, new ImageLoader.ImageListener() {
+                        @Override
+                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                            Bitmap bitmap = imageContainer.getBitmap();
+                            if (bitmap != null) {
+                                mFlagView.setImageBitmap(imageContainer.getBitmap());
                                 updateStatusBar();
                             }
                         }
