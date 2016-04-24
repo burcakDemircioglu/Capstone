@@ -103,9 +103,11 @@ public class MainActivity extends AppCompatActivity implements
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mCollapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
         mCollapsingToolbarLayout.setTitle("WannaBeer");
+
+        mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
+        mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
         mCollapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "erasdust.ttf"));
         mCollapsingToolbarLayout.setExpandedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "erasdust.ttf"));
-
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.image_background));
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.image_background));
 

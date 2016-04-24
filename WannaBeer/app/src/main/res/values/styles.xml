@@ -19,4 +19,10 @@
     <declare-styleable name="DrawInsetsFrameLayout">
         <attr name="insetBackground" format="color|reference" />
     </declare-styleable>
+
+    <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">50sp</item>
+        <item name="android:textColor">@color/image_background</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>
