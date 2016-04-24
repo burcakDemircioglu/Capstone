@@ -22,7 +22,6 @@
                 <!--suppress AndroidLintContentDescription -->
                 <ImageView
                     android:id="@+id/photo"
-                    android:src="@drawable/ic_share"
                     android:background="@color/image_background"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_photo_height"
