@@ -7,28 +7,24 @@
         <item
             android:id="@+id/drawer_home"
             android:checked="true"
-            android:icon="@android:drawable/ic_menu_compass"
+            android:icon="@android:drawable/ic_dialog_dialer"
             android:title="Home"/>
 
         <item
             android:id="@+id/drawer_favourite"
-            android:icon="@android:drawable/ic_dialog_email"
-            android:title="favorite"/>
+            android:icon="@android:drawable/btn_star_big_off"
+            android:title="Favorites"/>
 
         <item
             android:id="@+id/drawer_downloaded"
-            android:icon="@drawable/ic_share"
-            android:title="download"/>
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="Categories"/>
 
-        <item
-            android:id="@+id/drawer_more"
-            android:icon="@drawable/ic_arrow_back"
-            android:title="more"/>
 
         <item
             android:id="@+id/drawer_settings"
-            android:icon="@drawable/ic_arrow_back"
-            android:title="settings"/>
+            android:icon="@android:drawable/ic_menu_preferences"
+            android:title="Settings"/>
 
     </group>
 </menu>

@@ -114,8 +114,8 @@ public class MainActivity extends AppCompatActivity implements
 
         mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
         mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
-        mCollapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "erasdust.ttf"));
-        mCollapsingToolbarLayout.setExpandedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "erasdust.ttf"));
+        mCollapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "Chalkduster.ttf"));
+        mCollapsingToolbarLayout.setExpandedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "Chalkduster.ttf"));
         mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.image_background));
         mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.image_background));
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements
         final ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(android.R.drawable.ic_menu_manage);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_moreoverflow_holo_light);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 /*

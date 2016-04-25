@@ -21,7 +21,7 @@
     </declare-styleable>
 
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">50sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/image_background</item>
         <item name="android:textStyle">normal</item>
     </style>
