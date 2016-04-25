@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
+    private Activity activity=this;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -151,7 +152,25 @@ public class MainActivity extends AppCompatActivity implements
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                //Snackbar.make(content, menuItem.getTitle() + " pressed", Snackbar.LENGTH_LONG).show();
+                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_home))){
+                    //Intent intent=new Intent(activity, MainActivity.class);
+                    //startActivity(intent);
+                }
+
+                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_favorites))){
+                    Intent intent=new Intent(activity, FavoritesActivity.class);
+                    startActivity(intent);
+                }
+
+                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_categories))){
+                    Intent intent=new Intent(activity, CategoriesActivity.class);
+                    startActivity(intent);
+                }
+
+                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_settings))){
+                    Intent intent=new Intent(activity, SettingsActivity.class);
+                    startActivity(intent);
+                }
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return true;
@@ -234,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view= getLayoutInflater().inflate(R.layout.list_item_beer, parent, false);
+            View view= getLayoutInflater().inflate(R.layout.card_item_beer, parent, false);
 
             final ViewHolder vh = new ViewHolder(view);
 

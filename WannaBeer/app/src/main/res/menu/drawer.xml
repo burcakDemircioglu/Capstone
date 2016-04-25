@@ -8,23 +8,23 @@
             android:id="@+id/drawer_home"
             android:checked="true"
             android:icon="@android:drawable/ic_dialog_dialer"
-            android:title="Home"/>
+            android:title="@string/navigation_home"/>
 
         <item
             android:id="@+id/drawer_favourite"
             android:icon="@android:drawable/btn_star_big_off"
-            android:title="Favorites"/>
+            android:title="@string/navigation_favorites"/>
 
         <item
             android:id="@+id/drawer_downloaded"
             android:icon="@android:drawable/ic_menu_sort_by_size"
-            android:title="Categories"/>
+            android:title="@string/navigation_categories"/>
 
 
         <item
             android:id="@+id/drawer_settings"
             android:icon="@android:drawable/ic_menu_preferences"
-            android:title="Settings"/>
+            android:title="@string/navigation_settings"/>
 
     </group>
 </menu>
