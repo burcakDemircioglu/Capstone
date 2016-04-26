@@ -16,6 +16,10 @@ public class InfoLoader extends CursorLoader {
         return new InfoLoader(context, BeersContact.Items.buildItemUri(itemId));
     }
 
+    public static InfoLoader newInstanceForKind(Context context, String kind) {
+        return new InfoLoader(context, BeersContact.Items.buildKindUri(kind));
+    }
+
     private InfoLoader(Context context, Uri uri) {
         super(context, uri, Query.PROJECTION, null, null, BeersContact.Items.DEFAULT_SORT);
     }

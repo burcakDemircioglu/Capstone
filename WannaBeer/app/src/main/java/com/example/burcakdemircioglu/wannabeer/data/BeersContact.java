@@ -47,6 +47,9 @@ public class BeersContact {
         public static Uri buildItemUri(long _id) {
             return BASE_URI.buildUpon().appendPath("items").appendPath(Long.toString(_id)).build();
         }
+        public static Uri buildKindUri(String kind) {
+            return BASE_URI.buildUpon().appendPath("items").appendPath(kind).build();
+        }
 
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {
