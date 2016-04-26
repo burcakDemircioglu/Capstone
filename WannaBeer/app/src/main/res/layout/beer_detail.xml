@@ -24,6 +24,7 @@
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="up"
             android:src="@drawable/ic_arrow_back"
+
             />
     </FrameLayout>
 </FrameLayout>
