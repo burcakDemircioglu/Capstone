@@ -25,6 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.ui.util.DrawInsetsFrameLayout;
+import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
+import com.example.burcakdemircioglu.wannabeer.ui.util.ObservableScrollView;
 
 /**
  * Created by burcakdemircioglu on 21/04/16.

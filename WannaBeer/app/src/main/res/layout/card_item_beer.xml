@@ -18,7 +18,7 @@
         >
 
         <!--suppress AndroidLintContentDescription -->
-        <com.example.burcakdemircioglu.wannabeer.ui.DynamicHeightNetworkImageView
+        <com.example.burcakdemircioglu.wannabeer.ui.util.DynamicHeightNetworkImageView
             android:id="@+id/thumbnail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

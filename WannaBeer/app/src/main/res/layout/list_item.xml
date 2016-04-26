@@ -13,15 +13,15 @@
         >
 
         <ImageView
-            android:id="@+id/thumbnail"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/placeholder_image"
-            android:background="@color/image_background"
-            android:scaleType="fitCenter"
+            android:id="@+id/categories_image"
+            android:layout_margin="5dp"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center_vertical"
             />
         <TextView
-            android:id="@+id/article_title"
+            android:id="@+id/categories_title"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,18 +31,8 @@
             android:paddingBottom="@dimen/cardTextViewPaddingBottom"
             android:textColor="@color/text_color"
             android:ellipsize="end"
-            android:maxLines="4" />
+            android:maxLines="4"
+            android:layout_gravity="center_vertical"/>
 
-        <TextView
-            android:id="@+id/article_subtitle"
-            style="@style/TextAppearance.AppCompat.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/cardTextViewPadding"
-            android:paddingRight="@dimen/cardTextViewPadding"
-            android:paddingBottom="@dimen/cardTextViewPadding"
-            android:textColor="@color/text_color_subtitle"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:ellipsize="end" />
+
     </LinearLayout>

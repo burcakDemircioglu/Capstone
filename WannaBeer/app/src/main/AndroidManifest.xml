@@ -76,6 +76,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
         </activity>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:label="@string/title_activity_search"
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

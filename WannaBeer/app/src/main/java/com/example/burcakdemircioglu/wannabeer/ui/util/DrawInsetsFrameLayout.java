@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;

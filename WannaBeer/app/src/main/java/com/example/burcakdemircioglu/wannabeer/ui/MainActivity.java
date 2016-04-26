@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,6 +34,8 @@ import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.BeersContact;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.data.UpdaterService;
+import com.example.burcakdemircioglu.wannabeer.ui.util.DynamicHeightNetworkImageView;
+import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent=new Intent(activity, SearchActivity.class);
+                startActivity(intent);
             }
         });
 
