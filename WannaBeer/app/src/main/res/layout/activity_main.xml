@@ -8,58 +8,21 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".ui.MainActivity">
+
     <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="?colorPrimary"
 
-        >
+        <include layout="@layout/app_bar" />
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout"
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            app:expandedTitleMarginStart="72dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:layout_marginTop="0dp"
-            android:paddingTop="0dp">
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bannerbackground"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"/>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
-
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-
-
-    </android.support.design.widget.AppBarLayout>
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            >
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -82,6 +45,7 @@
         android:src="@android:drawable/ic_menu_search" />
 
 </android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"

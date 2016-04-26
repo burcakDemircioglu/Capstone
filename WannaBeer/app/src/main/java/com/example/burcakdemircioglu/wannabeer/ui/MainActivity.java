@@ -12,13 +12,10 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -36,6 +33,7 @@ import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.data.UpdaterService;
 import com.example.burcakdemircioglu.wannabeer.ui.util.DynamicHeightNetworkImageView;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
+import com.example.burcakdemircioglu.wannabeer.ui.util.menuUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -46,9 +44,7 @@ public class MainActivity extends AppCompatActivity implements
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
     private Activity activity=this;
-    private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private CollapsingToolbarLayout mCollapsingToolbarLayout;
     static final String EXTRA_STARTING_ALBUM_POSITION = "extra_starting_item_position";
     static final String EXTRA_CURRENT_ALBUM_POSITION = "extra_current_item_position";
 
@@ -96,10 +92,12 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        initToolbar();
-        setupDrawerLayout();
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        menuUtils.setupActionBarAndNavigation(drawerLayout, "WannaBeer", getSupportActionBar(), this, getResources());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -111,15 +109,7 @@ public class MainActivity extends AppCompatActivity implements
         });
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        mCollapsingToolbarLayout=(CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar_layout);
-        mCollapsingToolbarLayout.setTitle("WannaBeer");
 
-        mCollapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppBar);
-        mCollapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
-        mCollapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "Chalkduster.ttf"));
-        mCollapsingToolbarLayout.setExpandedTitleTypeface(Typeface.createFromAsset(getResources().getAssets(), "Chalkduster.ttf"));
-        mCollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.image_background));
-        mCollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.image_background));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getLoaderManager().initLoader(0, null, this);
@@ -128,56 +118,11 @@ public class MainActivity extends AppCompatActivity implements
             refresh();
         }
     }
-    private void refresh() {
-        startService(new Intent(this, UpdaterService.class));
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        registerReceiver(mRefreshingReceiver, new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
-    }
-    private void initToolbar() {
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_moreoverflow_holo_light);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
 
-    private void setupDrawerLayout() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_home))){
-                    //Intent intent=new Intent(activity, MainActivity.class);
-                    //startActivity(intent);
-                }
 
-                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_favorites))){
-                    Intent intent=new Intent(activity, FavoritesActivity.class);
-                    startActivity(intent);
-                }
 
-                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_categories))){
-                    Intent intent=new Intent(activity, CategoriesActivity.class);
-                    startActivity(intent);
-                }
-
-                if(menuItem.getTitle().toString().equals(getString(R.string.navigation_settings))){
-                    Intent intent=new Intent(activity, SettingsActivity.class);
-                    startActivity(intent);
-                }
-                menuItem.setChecked(true);
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -190,6 +135,15 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    private void refresh() {
+        startService(new Intent(this, UpdaterService.class));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(mRefreshingReceiver, new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
+    }
 
     @Override
     protected void onStop() {
