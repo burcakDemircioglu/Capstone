@@ -64,7 +64,7 @@ public class CategoryTitlesAdapter extends BaseAdapter implements View.OnClickLi
 
         if(list_item_view==null){
 
-             list_item_view= inflater.inflate(R.layout.list_item, null);
+             list_item_view= inflater.inflate(R.layout.category_title_list_item, null);
 
             holder = new ViewHolder();
             holder.text = (TextView) list_item_view.findViewById(R.id.categories_title);
