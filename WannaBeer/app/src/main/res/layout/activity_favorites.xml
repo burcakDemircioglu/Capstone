@@ -1,34 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.burcakdemircioglu.wannabeer.ui.util.DrawInsetsFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/draw_insets_frame_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.burcakdemircioglu.wannabeer.ui.FavoritesActivity">
+    android:layout_height="match_parent">
+<com.example.burcakdemircioglu.wannabeer.ui.util.ObservableScrollView
+    android:id="@+id/scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/photo_container"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="match_parent"
+            android:background="@color/image_background">
+            <!--suppress AndroidLintContentDescription -->
+            <ImageView
+                android:id="@+id/photo"
+                android:background="@color/text_color"
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/profile_background"
+                />
+            <!--
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="112dp"
+                                android:background="@drawable/photo_background_protection" />
+                                -->
+        </FrameLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/profile_foreground"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="90dp"
+                android:src="@drawable/profile_foreground"
+                android:elevation="6dp"
+                android:scaleType="centerCrop"
+                />
+        <com.example.burcakdemircioglu.wannabeer.ui.util.MaxWidthLinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxWidth="@dimen/detail_card_max_width"
+            android:background="#fff"
+            android:elevation="4dp"
+            android:layout_marginTop="143dp">
+            <LinearLayout
+                android:id="@+id/meta_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:elevation="@dimen/detail_title_bar_elevation"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/detail_inner_horiz_margin"
+                android:paddingRight="@dimen/detail_inner_horiz_margin"
+                android:paddingTop="@dimen/detail_metabar_vert_padding"
+                android:paddingBottom="@dimen/detail_metabar_vert_padding"
+                android:layout_marginBottom="@dimen/detail_metabar_vert_padding">
 
-    </android.support.design.widget.AppBarLayout>
+                <TextView
+                    android:id="@+id/article_title"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/text_color_subtitle"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/detail_title_text_size"
+                    android:text="lov'd!"
+                    android:textAlignment="center"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/empty_space"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/text_color_subtitle"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/detail_title_text_size"
+                    android:textAlignment="center"
+                    android:layout_weight="1"/>
 
-    <include layout="@layout/content_favorites" />
+                <TextView
+                    android:id="@+id/article_byline"
+                    style="?android:attr/textAppearanceMedium"
+                    android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textColor="@color/text_color_subtitle"
+                    android:textSize="@dimen/detail_title_text_size"
+                    android:textStyle="bold"
+                    android:textAlignment="center"
 
-</android.support.design.widget.CoordinatorLayout>
+                    android:text="meh.."
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/article_location"
+                    style="?android:attr/textAppearanceMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/detail_inner_horiz_margin"
+                    android:layout_marginRight="@dimen/detail_inner_horiz_margin"
+                    android:textColor="@color/text_color"
+                    android:textColorLink="@color/colorAccent"
+                    android:textSize="@dimen/detail_body_text_size"
+                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
+                    android:text="deneme"/>
+            <include layout="@layout/content_favorites" />
+
+        </com.example.burcakdemircioglu.wannabeer.ui.util.MaxWidthLinearLayout>
+        </RelativeLayout>
+    </FrameLayout>
+</com.example.burcakdemircioglu.wannabeer.ui.util.ObservableScrollView>
+    <ImageButton
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:id="@+id/action_up"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="up"
+        android:src="@drawable/ic_arrow_back"
+        />
+    </com.example.burcakdemircioglu.wannabeer.ui.util.DrawInsetsFrameLayout>
