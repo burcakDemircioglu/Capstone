@@ -13,10 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -103,6 +105,15 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             ListView beerList=(ListView) mRootView.findViewById(R.id.categories_detail_list_view);
+
+            beerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    mCursor.moveToPosition(position);
+                    Toast.makeText(getActivity(), mCursor.getString(InfoLoader.Query.NAME), Toast.LENGTH_SHORT).show();
+                }
+            });
             BeerListAdapter beerAdapter=new BeerListAdapter(getActivity(), mCursor);
             beerList.setAdapter(beerAdapter);
 
@@ -120,7 +131,8 @@ public class CategoriesDetailActivityFragment extends Fragment implements
         // you don't bind any data to the view at this point.
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return LayoutInflater.from(context).inflate(R.layout.beer_list_item, parent, false);
+            View root=LayoutInflater.from(context).inflate(R.layout.beer_list_item, parent, false);
+            return root;
         }
 
         // The bindView method is used to bind all data to a given view
@@ -132,7 +144,7 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             TextView countryView = (TextView) view.findViewById(R.id.beer_country);
             image=(ImageView) view.findViewById(R.id.beer_logo);
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {
+                    .get(cursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
@@ -155,5 +167,6 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             nameView.setText(name);
             countryView.setText(String.valueOf(country));
         }
+
     }
 }

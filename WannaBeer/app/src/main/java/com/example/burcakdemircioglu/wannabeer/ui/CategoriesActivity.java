@@ -60,6 +60,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
 
     /*****************  This function used by adapter ****************/
+/*
     public void onItemClick(int mPosition)
     {
         String tempValues =categories[mPosition];
@@ -67,7 +68,7 @@ public class CategoriesActivity extends AppCompatActivity {
         Intent intent=new Intent(this, CategoriesDetailActivity.class);
         intent.putExtra("kind", tempValues);
         startActivity(intent);
-    }
+    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +16,11 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.ui.CategoriesActivity;
 
 /**
  * Created by burcakdemircioglu on 26/04/16.
  */
-public class CategoryTitlesAdapter extends BaseAdapter implements View.OnClickListener{
+public class CategoryTitlesAdapter extends BaseAdapter {
     private Activity activity;
     private String[] data;
     private static LayoutInflater inflater=null;
@@ -106,28 +104,10 @@ public class CategoryTitlesAdapter extends BaseAdapter implements View.OnClickLi
                         }
                     });
 
-            list_item_view.setOnClickListener(new OnItemClickListener( position ));
+            //list_item_view.setOnClickListener(new OnItemClickListener( position ));
         }
         return list_item_view;
     }
 
-    @Override
-    public void onClick(View v) {
-        Log.v("CustomAdapter", "A category title is clicked");
-    }
 
-    private class OnItemClickListener  implements View.OnClickListener {
-        private int mPosition;
-
-        OnItemClickListener(int position){
-            mPosition = position;
-        }
-
-        @Override
-        public void onClick(View arg0) {
-
-            CategoriesActivity categoriesActivity = (CategoriesActivity) activity;
-            categoriesActivity.onItemClick(mPosition);
-        }
-    }
 }
