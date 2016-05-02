@@ -51,9 +51,10 @@ public class CategoriesDetailActivity extends AppCompatActivity {
         CategoriesDetailActivityFragment fragobj = new CategoriesDetailActivityFragment();
         fragobj.setArguments(bundle);
 
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-        menuUtils.initActionBar(getSupportActionBar());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ab_back_material);
+
+        //menuUtils.initActionBar(getSupportActionBar());
         menuUtils.setupCollapsingToolbar(mKind, this, getResources());
     }
 
