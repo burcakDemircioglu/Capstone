@@ -16,7 +16,7 @@ import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.ui.util.menuUtils;
 
 public class CategoriesActivity extends AppCompatActivity {
-    public static String[] categories={"DarkAle", "GoldenAle", "ImperialStout", "Lager", "PaleAle","Pilsener","Porter","Stout","WheatBeer"};
+    public static String[] categories={"PaleAle", "Lager","Pilsener", "WheatBeer", "GoldenAle", "DarkAle","Porter","Stout", "ImperialStout"};
     public CategoriesActivity CustomListView;
     private Activity activity=this;
     private DrawerLayout drawerLayout;
