@@ -5,7 +5,7 @@ import android.net.Uri;
 /**
  * Created by burcakdemircioglu on 19/04/16.
  */
-public class BeersContact {
+public class BeersContract {
     public static final String CONTENT_AUTHORITY = "com.example.burcakdemircioglu.wannabeer";
     public static final Uri BASE_URI = Uri.parse("content://com.example.burcakdemircioglu.wannabeer");
 
@@ -48,7 +48,7 @@ public class BeersContact {
             return BASE_URI.buildUpon().appendPath("items").appendPath(Long.toString(_id)).build();
         }
         public static Uri buildKindUri(String kind) {
-            return BASE_URI.buildUpon().appendPath("items").appendPath(kind).build();
+            return BASE_URI.buildUpon().appendPath("items").appendPath("kinds").appendPath(kind).build();
         }
 
         /** Read item ID item detail URI. */

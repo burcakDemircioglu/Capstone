@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +29,16 @@ public class BeersProvider extends ContentProvider
 
         private static final int ITEMS = 0;
         private static final int ITEMS__ID = 1;
+        private static final int KIND=2;
 
         private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = BeersContact.CONTENT_AUTHORITY;
+        final String authority = BeersContract.CONTENT_AUTHORITY;
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
+        matcher.addURI(authority, "items/kinds/*", KIND);
         return matcher;
     }
 
@@ -50,9 +53,11 @@ public class BeersProvider extends ContentProvider
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case ITEMS:
-                return BeersContact.Items.CONTENT_TYPE;
+                return BeersContract.Items.CONTENT_TYPE;
             case ITEMS__ID:
-                return BeersContact.Items.CONTENT_ITEM_TYPE;
+                return BeersContract.Items.CONTENT_ITEM_TYPE;
+            case KIND:
+                return BeersContract.Items.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -77,7 +82,7 @@ public class BeersProvider extends ContentProvider
             case ITEMS: {
                 final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
-                return BeersContact.Items.buildItemUri(_id);
+                return BeersContract.Items.buildItemUri(_id);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -115,7 +120,12 @@ public class BeersProvider extends ContentProvider
             }
             case ITEMS__ID: {
                 final String _id = paths.get(1);
-                return builder.table(Tables.ITEMS).where(BeersContact.Items._ID + "=?", _id);
+                return builder.table(Tables.ITEMS).where(BeersContract.Items._ID + "=?", _id);
+            }
+            case KIND:{
+                final String kind=paths.get(2);
+                Log.e("buildSelection", kind);
+                return builder.table(Tables.ITEMS).where(BeersContract.Items.KIND+ "=?",kind);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

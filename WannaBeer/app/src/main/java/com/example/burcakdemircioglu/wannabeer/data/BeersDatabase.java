@@ -20,16 +20,16 @@ public class BeersDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Tables.ITEMS + " ("
-                + BeersContact.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BeersContact.ItemsColumns.SERVER_ID + " TEXT,"
-                + BeersContact.ItemsColumns.NAME + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.PHOTO + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.KIND + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.BOTTLE + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.COUNTRY + " TEXT NOT NULL,"
-                + BeersContact.ItemsColumns.ALCOHOL_PERCENTAGE + " REAL NOT NULL DEFAULT 1.5,"
-                + BeersContact.ItemsColumns.LOCATION + " TEXT,"
-                + BeersContact.ItemsColumns.DESCRIPTION + " TEXT NOT NULL"
+                + BeersContract.ItemsColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BeersContract.ItemsColumns.SERVER_ID + " TEXT,"
+                + BeersContract.ItemsColumns.NAME + " TEXT NOT NULL,"
+                + BeersContract.ItemsColumns.PHOTO + " TEXT NOT NULL,"
+                + BeersContract.ItemsColumns.KIND + " TEXT NOT NULL,"
+                + BeersContract.ItemsColumns.BOTTLE + " TEXT NOT NULL,"
+                + BeersContract.ItemsColumns.COUNTRY + " TEXT NOT NULL,"
+                + BeersContract.ItemsColumns.ALCOHOL_PERCENTAGE + " REAL NOT NULL DEFAULT 1.5,"
+                + BeersContract.ItemsColumns.LOCATION + " TEXT,"
+                + BeersContract.ItemsColumns.DESCRIPTION + " TEXT NOT NULL"
                 + ")" );
     }
 

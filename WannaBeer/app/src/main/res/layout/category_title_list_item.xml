@@ -16,9 +16,10 @@
             android:id="@+id/categories_image"
             android:layout_margin="5dp"
             android:layout_width="45dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center_vertical"
+            android:src="@drawable/placeholder_image"
             />
         <TextView
             android:id="@+id/categories_title"

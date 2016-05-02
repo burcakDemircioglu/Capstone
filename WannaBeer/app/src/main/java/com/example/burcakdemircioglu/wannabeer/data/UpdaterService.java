@@ -52,7 +52,7 @@ public class UpdaterService extends IntentService {
         // Don't even inspect the intent, we only do one thing, and that's fetch content.
         ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
 
-        Uri dirUri = BeersContact.Items.buildDirUri();
+        Uri dirUri = BeersContract.Items.buildDirUri();
 
         // Delete all items
         cpo.add(ContentProviderOperation.newDelete(dirUri).build());
@@ -66,21 +66,21 @@ public class UpdaterService extends IntentService {
             for (int i = 0; i < array.length(); i++) {
                 ContentValues values = new ContentValues();
                 JSONObject object = array.getJSONObject(i);
-                values.put(BeersContact.Items.SERVER_ID, object.getString("id" ));
-                values.put(BeersContact.Items.NAME, object.getString("name" ));
-                values.put(BeersContact.Items.PHOTO, object.getString("photo" ));
-                values.put(BeersContact.Items.KIND, object.getString("kind" ));
-                values.put(BeersContact.Items.BOTTLE, object.getString("bottle" ));
-                values.put(BeersContact.Items.COUNTRY, object.getString("country" ));
-                values.put(BeersContact.Items.ALCOHOL_PERCENTAGE, object.getString("alcoholPercentage" ));
-                values.put(BeersContact.Items.LOCATION, object.getString("location" ));
-                values.put(BeersContact.Items.DESCRIPTION, object.getString("description" ));
+                values.put(BeersContract.Items.SERVER_ID, object.getString("id" ));
+                values.put(BeersContract.Items.NAME, object.getString("name" ));
+                values.put(BeersContract.Items.PHOTO, object.getString("photo" ));
+                values.put(BeersContract.Items.KIND, object.getString("kind" ));
+                values.put(BeersContract.Items.BOTTLE, object.getString("bottle" ));
+                values.put(BeersContract.Items.COUNTRY, object.getString("country" ));
+                values.put(BeersContract.Items.ALCOHOL_PERCENTAGE, object.getString("alcoholPercentage" ));
+                values.put(BeersContract.Items.LOCATION, object.getString("location" ));
+                values.put(BeersContract.Items.DESCRIPTION, object.getString("description" ));
 
                 cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
                 //Log.v("json",object.getString("description"));
             }
 
-            getContentResolver().applyBatch(BeersContact.CONTENT_AUTHORITY, cpo);
+            getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
 
         } catch (JSONException | RemoteException | OperationApplicationException e) {
             Log.e(TAG, "Error updating content.", e);

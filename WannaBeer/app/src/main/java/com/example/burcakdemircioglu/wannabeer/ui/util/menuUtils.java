@@ -24,8 +24,9 @@ public abstract class menuUtils {
 
     public static void setupActionBarAndNavigation(DrawerLayout drawerLayout,
                                                    String title, ActionBar actionBar, Activity activity, Resources res){
-        menuUtils.initActionBar(actionBar);
+
         menuUtils.setupDrawerLayout(drawerLayout, activity, res);
+        menuUtils.initActionBar(actionBar);
         menuUtils.setupCollapsingToolbar(title, activity, res);
 
     }

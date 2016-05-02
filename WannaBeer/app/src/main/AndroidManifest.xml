@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.BeerDetailActivity"
             android:parentActivityName=".ui.MainActivity"
@@ -84,6 +85,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.CategoriesDetailActivity"
+            android:label="@string/title_activity_categories_detail"
+            android:parentActivityName=".ui.CategoriesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.burcakdemircioglu.wannabeer.ui.CategoriesActivity" />
         </activity>
     </application>
 

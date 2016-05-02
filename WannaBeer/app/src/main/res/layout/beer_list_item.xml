@@ -15,35 +15,42 @@
     <ImageView
         android:id="@+id/beer_logo"
         android:layout_margin="5dp"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
         android:layout_gravity="center_vertical"
+        android:src="@drawable/placeholder_image"
         />
-    <TextView
-        android:id="@+id/beer_name"
-        style="@style/TextAppearance.AppCompat.Subhead"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/cardTextViewPadding"
-        android:paddingTop="@dimen/cardTextViewPadding"
-        android:paddingRight="@dimen/cardTextViewPadding"
-        android:paddingBottom="@dimen/cardTextViewPaddingBottom"
-        android:textColor="@color/text_color"
-        android:ellipsize="end"
-        android:maxLines="4"
-        android:layout_gravity="center_vertical"/>
-    <TextView
-        android:id="@+id/beer_kind"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/cardTextViewPadding"
-        android:paddingRight="@dimen/cardTextViewPadding"
-        android:paddingBottom="@dimen/cardTextViewPadding"
-        android:textColor="@color/text_color_subtitle"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:ellipsize="end" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/beer_name"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/cardTextViewPadding"
+            android:paddingTop="@dimen/cardTextViewPadding"
+            android:paddingRight="@dimen/cardTextViewPadding"
+            android:paddingBottom="@dimen/cardTextViewPaddingBottom"
+            android:textColor="@color/text_color"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/beer_country"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_color_subtitle"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/cardTextViewPadding"
+            android:paddingRight="@dimen/cardTextViewPadding"
+            android:paddingBottom="@dimen/cardTextViewPaddingBottom"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="sub"/>
+    </LinearLayout>
 
 </LinearLayout>

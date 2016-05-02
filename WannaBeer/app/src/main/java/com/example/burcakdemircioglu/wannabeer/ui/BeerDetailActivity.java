@@ -21,7 +21,7 @@ import android.view.WindowInsets;
 import android.widget.ImageView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.data.BeersContact;
+import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 
 import java.util.List;
@@ -166,7 +166,7 @@ public class BeerDetailActivity extends AppCompatActivity
 
             if (savedInstanceState == null) {
                 if (getIntent() != null && getIntent().getData() != null) {
-                    mStartId = BeersContact.Items.getItemId(getIntent().getData());
+                    mStartId = BeersContract.Items.getItemId(getIntent().getData());
                     mSelectedItemId = mStartId;
                 }
             }

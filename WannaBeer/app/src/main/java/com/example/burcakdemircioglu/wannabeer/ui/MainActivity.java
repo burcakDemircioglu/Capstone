@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.data.BeersContact;
+import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.data.UpdaterService;
 import com.example.burcakdemircioglu.wannabeer.ui.util.DynamicHeightNetworkImageView;
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements
                             .toBundle();
                     Log.e("AdapterPosition", String.valueOf(getItemId(vh.getAdapterPosition())));
                     Intent intent=new Intent(Intent.ACTION_VIEW,
-                            BeersContact.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
+                            BeersContract.Items.buildItemUri(getItemId(vh.getAdapterPosition())));
                     startActivity(intent, bundle);
 
                     //startActivity(intent);

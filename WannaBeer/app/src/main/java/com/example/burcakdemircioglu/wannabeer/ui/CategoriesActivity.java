@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.ui.util.menuUtils;
@@ -65,13 +64,9 @@ public class CategoriesActivity extends AppCompatActivity {
     {
         String tempValues =categories[mPosition];
 
-
-        // SHOW ALERT
-
-        Toast.makeText(CustomListView,
-                ""+tempValues+"Image:"+"Url:",
-        Toast.LENGTH_LONG)
-        .show();
+        Intent intent=new Intent(this, CategoriesDetailActivity.class);
+        intent.putExtra("kind", tempValues);
+        startActivity(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
