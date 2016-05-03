@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.example.burcakdemircioglu.wannabeer.R;
@@ -39,18 +38,8 @@ public class CategoriesDetailActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        Intent intent=getIntent();
-        mKind=intent.getExtras().getString("kind");
-        Log.e("kind", mKind);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("kind", mKind);
-// set Fragmentclass Arguments
-        CategoriesDetailActivityFragment fragobj = new CategoriesDetailActivityFragment();
-        fragobj.setArguments(bundle);
+        if(getIntent().getExtras()!=null)
+            mKind=getIntent().getExtras().getString("kind");
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ab_back_material);

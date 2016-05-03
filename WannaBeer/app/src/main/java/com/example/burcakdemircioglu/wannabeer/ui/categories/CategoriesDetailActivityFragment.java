@@ -3,6 +3,7 @@ package com.example.burcakdemircioglu.wannabeer.ui.categories;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,12 +19,12 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.ui.BeerDetailActivityWithoutPager;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 
 /**
@@ -40,7 +41,8 @@ public class CategoriesDetailActivityFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mKind=getActivity().getIntent().getExtras().getString("kind");
+        if(getActivity().getIntent().getExtras()!=null)
+            mKind=getActivity().getIntent().getExtras().getString("kind");
     }
 
 
@@ -48,6 +50,8 @@ public class CategoriesDetailActivityFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        if(getActivity().getIntent().getExtras()!=null)
+            mKind=getActivity().getIntent().getExtras().getString("kind");
         getLoaderManager().initLoader(0, null,  this);
 
         mRootView=inflater.inflate(R.layout.fragment_categories_detail, container, false);
@@ -99,7 +103,10 @@ public class CategoriesDetailActivityFragment extends Fragment implements
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     mCursor.moveToPosition(position);
-                    Toast.makeText(getActivity(), mCursor.getString(InfoLoader.Query.NAME), Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(getActivity(), BeerDetailActivityWithoutPager.class);
+                    intent.putExtra("ItemId", mCursor.getLong(InfoLoader.Query._ID));
+                            //BeersContract.Items.buildItemUri(mCursor.getInt(InfoLoader.Query._ID)));
+                    startActivity(intent);
                 }
             });
             BeerListAdapter beerAdapter=new BeerListAdapter(getActivity(), mCursor);

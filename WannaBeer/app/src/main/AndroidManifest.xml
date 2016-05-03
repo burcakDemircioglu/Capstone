@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.BeerDetailActivity"
             android:parentActivityName=".ui.MainActivity"
@@ -94,6 +93,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.categories.CategoriesActivity" />
+        </activity>
+        <activity
+            android:name=".ui.BeerDetailActivityWithoutPager"
+            android:label="@string/title_activity_beer_detail_activity_without_pager"
+            android:parentActivityName=".ui.categories.CategoriesDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesDetailActivity" />
         </activity>
     </application>
 

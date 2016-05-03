@@ -16,5 +16,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_categories_detail">CategoriesDetailActivity</string>
+    <string name="title_activity_beer_detail_activity_without_pager">
+        BeerDetailActivityWithoutPager
+    </string>
 
 </resources>
