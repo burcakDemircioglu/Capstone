@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.favorites;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,8 +1,11 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.example.burcakdemircioglu.wannabeer.ui.favorites.dislike_tab;
+import com.example.burcakdemircioglu.wannabeer.ui.favorites.like_tab;
 
 /**
  * Created by burcakdemircioglu on 28/04/16.

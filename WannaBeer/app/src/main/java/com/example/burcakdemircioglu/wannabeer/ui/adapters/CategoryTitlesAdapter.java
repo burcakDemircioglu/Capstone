@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui.util;
+package com.example.burcakdemircioglu.wannabeer.ui.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 
 /**
  * Created by burcakdemircioglu on 26/04/16.

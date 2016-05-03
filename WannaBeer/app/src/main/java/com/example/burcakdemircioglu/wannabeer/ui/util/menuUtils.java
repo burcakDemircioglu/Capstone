@@ -11,8 +11,8 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.ui.CategoriesActivity;
-import com.example.burcakdemircioglu.wannabeer.ui.FavoritesActivity;
+import com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesActivity;
+import com.example.burcakdemircioglu.wannabeer.ui.favorites.FavoritesActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.MainActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.SettingsActivity;
 

@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.favorites;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.ui.adapters.FavoritesPagerAdapter;
 
 public class FavoritesActivity extends AppCompatActivity {
     ImageButton mUpButton;

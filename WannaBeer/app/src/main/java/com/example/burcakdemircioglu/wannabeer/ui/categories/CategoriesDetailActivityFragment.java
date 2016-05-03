@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.categories;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -40,18 +40,13 @@ public class CategoriesDetailActivityFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         mKind=getActivity().getIntent().getExtras().getString("kind");
-        Log.e("CategoriesDetailActFrag", mKind);
-
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //mKind=getArguments().getString("kind");
 
         getLoaderManager().initLoader(0, null,  this);
 
@@ -62,17 +57,15 @@ public class CategoriesDetailActivityFragment extends Fragment implements
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
-        //bindViews();
+        bindViews();
     }
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        Log.e("Loader", "Created");
         return InfoLoader.newInstanceForKind(getActivity(), mKind);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Log.e("CategoriesDetailFrag", "onLoadFinished");
         if (!isAdded()) {
             if (cursor != null) {
                 cursor.close();
@@ -86,19 +79,14 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             mCursor.close();
             mCursor = null;
         }
-        if(mCursor!=null)
-            Log.e("kind",mCursor.getString(InfoLoader.Query.NAME));
-        else
+        if(mCursor==null)
             Log.e("kind", "Cursor is null!!");
         bindViews();
     }
     private void bindViews() {
-        Log.e("bindView", "in");
         if (mRootView == null) {
             return;
         }
-
-
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -121,8 +109,12 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             mRootView.setVisibility(View.GONE);
         }
     }
+    public static class ViewHolder{
+        public TextView nameView;
+        public TextView countryView;
+        public ImageView imageView;
+    }
     public class BeerListAdapter extends CursorAdapter {
-        ImageView image;
         public BeerListAdapter(Context context, Cursor cursor) {
             super(context, cursor, 0);
         }
@@ -140,18 +132,19 @@ public class CategoriesDetailActivityFragment extends Fragment implements
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             // Find fields to populate in inflated template
-            TextView nameView = (TextView) view.findViewById(R.id.beer_name);
-            TextView countryView = (TextView) view.findViewById(R.id.beer_country);
-            image=(ImageView) view.findViewById(R.id.beer_logo);
+            final ViewHolder holder=new ViewHolder();
+            holder.nameView = (TextView) view.findViewById(R.id.beer_name);
+            holder.countryView = (TextView) view.findViewById(R.id.beer_country);
+            holder.imageView=(ImageView) view.findViewById(R.id.beer_logo);
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(cursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {
                         @Override
                         public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                             Bitmap bitmap = imageContainer.getBitmap();
+                            RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+                            drawable.setCircular(true);
                             if (bitmap != null) {
-                                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
-                                drawable.setCircular(true);
-                                image.setImageDrawable(drawable);
+                                holder.imageView.setImageDrawable(drawable);
                             }
                         }
 
@@ -164,8 +157,8 @@ public class CategoriesDetailActivityFragment extends Fragment implements
             String name = cursor.getString(InfoLoader.Query.NAME);
             String country = cursor.getString(InfoLoader.Query.COUNTRY);
             // Populate fields with extracted properties
-            nameView.setText(name);
-            countryView.setText(String.valueOf(country));
+            holder.nameView.setText(name);
+            holder.countryView.setText(String.valueOf(country));
         }
 
     }

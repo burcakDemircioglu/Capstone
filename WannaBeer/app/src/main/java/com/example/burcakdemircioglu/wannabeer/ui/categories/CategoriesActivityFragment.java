@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.categories;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.ui.util.CategoryTitlesAdapter;
+import com.example.burcakdemircioglu.wannabeer.ui.adapters.CategoryTitlesAdapter;
 
 /**
  * A placeholder fragment containing a simple view.

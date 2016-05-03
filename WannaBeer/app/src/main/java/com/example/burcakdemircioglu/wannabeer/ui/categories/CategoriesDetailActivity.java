@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer.ui;
+package com.example.burcakdemircioglu.wannabeer.ui.categories;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.ui.SearchActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.util.menuUtils;
 
 public class CategoriesDetailActivity extends AppCompatActivity {
