@@ -24,6 +24,7 @@ public class InfoLoader extends CursorLoader {
         super(context, uri, Query.PROJECTION, null, null, BeersContract.Items.DEFAULT_SORT);
     }
 
+
     public interface Query {
         String[] PROJECTION = {
                 BeersContract.Items._ID,
@@ -46,5 +47,6 @@ public class InfoLoader extends CursorLoader {
         int ALCOHOL_PERCENTAGE = 6;
         int LOCATION=7;
         int DESCRIPTION = 8;
+
     }
 }

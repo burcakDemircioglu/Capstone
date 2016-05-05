@@ -31,6 +31,16 @@ public class BeersDatabase extends SQLiteOpenHelper {
                 + BeersContract.ItemsColumns.LOCATION + " TEXT,"
                 + BeersContract.ItemsColumns.DESCRIPTION + " TEXT NOT NULL"
                 + ")" );
+
+        db.execSQL("CREATE TABLE " + Tables.LIKEDITEMS + " ("
+                + BeersContract.FavoritesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BeersContract.FavoritesColumns.BEER_NAME + " TEXT NOT NULL"
+                + ")" );
+
+        db.execSQL("CREATE TABLE " + Tables.DISLIKEDITEMS + " ("
+                + BeersContract.FavoritesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BeersContract.FavoritesColumns.BEER_NAME + " TEXT NOT NULL"
+                + ")" );
     }
 
     @Override

@@ -24,11 +24,16 @@ public class BeersProvider extends ContentProvider
 
         interface Tables {
             String ITEMS = "items";
+            String LIKEDITEMS="likeditems";
+            String DISLIKEDITEMS="dislikeditems";
         }
 
         private static final int ITEMS = 0;
         private static final int ITEMS__ID = 1;
         private static final int KIND=2;
+
+        private static final int LIKEDITEMS=3;
+        private static final int DISLIKEDITEMS=4;
 
         private static final UriMatcher sUriMatcher = buildUriMatcher();
 
@@ -38,6 +43,8 @@ public class BeersProvider extends ContentProvider
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
         matcher.addURI(authority, "items/kinds/*", KIND);
+        matcher.addURI(authority, "likeditems", LIKEDITEMS);
+        matcher.addURI(authority, "dislikeditems", DISLIKEDITEMS);
         return matcher;
     }
 
@@ -57,6 +64,10 @@ public class BeersProvider extends ContentProvider
                 return BeersContract.Items.CONTENT_ITEM_TYPE;
             case KIND:
                 return BeersContract.Items.CONTENT_ITEM_TYPE;
+            case LIKEDITEMS:
+                return BeersContract.LikedItems.CONTENT_TYPE;
+            case DISLIKEDITEMS:
+                return BeersContract.DislikedItems.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -82,6 +93,16 @@ public class BeersProvider extends ContentProvider
                 final long _id = db.insertOrThrow(Tables.ITEMS, null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
                 return BeersContract.Items.buildItemUri(_id);
+            }
+            case LIKEDITEMS:{
+                final long _id = db.insertOrThrow(Tables.LIKEDITEMS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return BeersContract.LikedItems.buildItemUri(_id);
+            }
+            case DISLIKEDITEMS:{
+                final long _id = db.insertOrThrow(Tables.DISLIKEDITEMS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return BeersContract.DislikedItems.buildItemUri(_id);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -124,6 +145,12 @@ public class BeersProvider extends ContentProvider
             case KIND:{
                 final String kind=paths.get(2);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items.KIND+ "=?",kind);
+            }
+            case LIKEDITEMS: {
+                return builder.table(Tables.LIKEDITEMS);
+            }
+            case DISLIKEDITEMS: {
+                return builder.table(Tables.DISLIKEDITEMS);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

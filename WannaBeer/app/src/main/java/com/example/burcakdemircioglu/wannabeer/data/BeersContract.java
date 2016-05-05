@@ -35,8 +35,8 @@ public class BeersContract {
     interface FavoritesColumns{
         /** Type: INTEGER PRIMARY KEY AUTOINCREMENT */
         String _ID = "_id";
-        /** Type: INTEGER NOT NULL */
-        String BEER_ID = "beer_id";
+        /** Type: TEXT NOT NULL */
+        String BEER_NAME = "beer_name";
     }
 
     public static class Items implements ItemsColumns {
@@ -67,13 +67,17 @@ public class BeersContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.likeditems";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.likeditems";
 
-        public static final String DEFAULT_SORT = _ID + " ASC";
+        public static final String DEFAULT_SORT = BEER_NAME + " ASC";
 
         /**
          * Matches: /items/
          */
         public static Uri buildDirUri() {
             return BASE_URI.buildUpon().appendPath("likeditems").build();
+        }
+        /** Matches: /items/[_id]/ */
+        public static Uri buildItemUri(long _id) {
+            return BASE_URI.buildUpon().appendPath("likeditems").appendPath(Long.toString(_id)).build();
         }
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {
@@ -84,13 +88,17 @@ public class BeersContract {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.dislikeditems";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.dislikeditems";
 
-        public static final String DEFAULT_SORT = _ID + " ASC";
+        public static final String DEFAULT_SORT = BEER_NAME + " ASC";
 
         /**
          * Matches: /items/
          */
         public static Uri buildDirUri() {
             return BASE_URI.buildUpon().appendPath("dislikeditems").build();
+        }
+        /** Matches: /items/[_id]/ */
+        public static Uri buildItemUri(long _id) {
+            return BASE_URI.buildUpon().appendPath("dislikeditems").appendPath(Long.toString(_id)).build();
         }
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {

@@ -175,6 +175,7 @@ public class SelectionBuilder {
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
 
+
     /**
      * Execute delete using the current internal state as {@code WHERE} clause.
      */
