@@ -32,6 +32,13 @@ public class BeersContract {
         String DESCRIPTION = "description";
     }
 
+    interface FavoritesColumns{
+        /** Type: INTEGER PRIMARY KEY AUTOINCREMENT */
+        String _ID = "_id";
+        /** Type: INTEGER NOT NULL */
+        String BEER_ID = "beer_id";
+    }
+
     public static class Items implements ItemsColumns {
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.items";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.items";
@@ -56,7 +63,38 @@ public class BeersContract {
             return Long.parseLong(itemUri.getPathSegments().get(1));
         }
     }
+    public static class LikedItems implements FavoritesColumns {
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.likeditems";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.likeditems";
 
-    //private BeersContract() {
-    //}
+        public static final String DEFAULT_SORT = _ID + " ASC";
+
+        /**
+         * Matches: /items/
+         */
+        public static Uri buildDirUri() {
+            return BASE_URI.buildUpon().appendPath("likeditems").build();
+        }
+        /** Read item ID item detail URI. */
+        public static long getItemId(Uri itemUri) {
+            return Long.parseLong(itemUri.getPathSegments().get(1));
+        }
+    }
+    public static class DislikedItems implements FavoritesColumns {
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.burcakdemircioglu.wannabeer.dislikeditems";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.com.example.burcakdemircioglu.wannabeer.dislikeditems";
+
+        public static final String DEFAULT_SORT = _ID + " ASC";
+
+        /**
+         * Matches: /items/
+         */
+        public static Uri buildDirUri() {
+            return BASE_URI.buildUpon().appendPath("dislikeditems").build();
+        }
+        /** Read item ID item detail URI. */
+        public static long getItemId(Uri itemUri) {
+            return Long.parseLong(itemUri.getPathSegments().get(1));
+        }
+    }
 }
