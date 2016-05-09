@@ -11,4 +11,11 @@
         android:text="Like Tab"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+    <ListView
+        android:id="@+id/like_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+    </ListView>
 </RelativeLayout>

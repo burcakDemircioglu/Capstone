@@ -1,7 +1,7 @@
 package com.example.burcakdemircioglu.wannabeer.data;
 
 import android.content.Context;
-import android.content.CursorLoader;
+import android.support.v4.content.CursorLoader;
 import android.net.Uri;
 
 /**
@@ -9,11 +9,11 @@ import android.net.Uri;
  */
 public class DislikedBeersLoader extends CursorLoader {
     public static DislikedBeersLoader newAllArticlesInstance(Context context) {
-        return new DislikedBeersLoader(context, BeersContract.Items.buildDirUri());
+        return new DislikedBeersLoader(context, BeersContract.DislikedItems.buildDirUri());
     }
 
     public static DislikedBeersLoader newInstanceForItemId(Context context, long itemId) {
-        return new DislikedBeersLoader(context, BeersContract.Items.buildItemUri(itemId));
+        return new DislikedBeersLoader(context, BeersContract.DislikedItems.buildItemUri(itemId));
     }
 
 
