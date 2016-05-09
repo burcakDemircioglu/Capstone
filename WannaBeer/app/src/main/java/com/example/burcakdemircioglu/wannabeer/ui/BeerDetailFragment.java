@@ -18,8 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
@@ -51,6 +53,13 @@ public class BeerDetailFragment extends Fragment implements
     private View mPhotoContainerView;
     private ImageView mPhotoView;
     private ImageView mFlagView;
+    private ImageButton mLikeButton;
+    private ImageButton mDislikeButton;
+
+    private int likeDislikeInteraction;
+    private static final int LIKE=0;
+    private static final int DISLIKE=1;
+    private static final int NO_INTERACTION =2;
 
     private int mScrollY;
     private boolean mIsCard = false;
@@ -102,6 +111,7 @@ public class BeerDetailFragment extends Fragment implements
         mIsCard = getResources().getBoolean(R.bool.detail_is_card);
         mStatusBarFullOpacityBottom = getResources().getDimensionPixelSize(
                 R.dimen.detail_card_top_margin);
+        likeDislikeInteraction= NO_INTERACTION;
         setHasOptionsMenu(true);
     }
 
@@ -148,6 +158,9 @@ public class BeerDetailFragment extends Fragment implements
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mPhotoView.setTransitionName(Integer.toString(mPosition));
         //Log.e("onClickTransNameDetail", Integer.toString(mPosition));
+
+        mLikeButton= (ImageButton)mRootView.findViewById(R.id.like_button);
+        mDislikeButton=(ImageButton)mRootView.findViewById(R.id.dislike_button);
 
         mPhotoContainerView = mRootView.findViewById(R.id.photo_container);
 
@@ -228,6 +241,37 @@ public class BeerDetailFragment extends Fragment implements
             String location= "Location: "+mCursor.getString(InfoLoader.Query.LOCATION);
             locationView.setText(location);
 
+            if (likeDislikeInteraction==LIKE){
+                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button_filter));
+                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
+
+            }
+            else if(likeDislikeInteraction==DISLIKE){
+                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
+                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button_filter));
+            }
+            else{
+                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
+                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
+            }
+            mLikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (likeDislikeInteraction!=LIKE) likeDislikeInteraction=LIKE;
+                    else {likeDislikeInteraction=NO_INTERACTION;}
+                    bindViews();
+                    Toast.makeText(getActivity(), "like", Toast.LENGTH_SHORT).show();
+                }
+            });
+            mDislikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(likeDislikeInteraction!=DISLIKE)likeDislikeInteraction=DISLIKE;
+                    else {likeDislikeInteraction=NO_INTERACTION;}
+                    bindViews();
+                    Toast.makeText(getActivity(), "dislike", Toast.LENGTH_SHORT).show();
+                }
+            });
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(InfoLoader.Query.BOTTLE), new ImageLoader.ImageListener() {
                         @Override
