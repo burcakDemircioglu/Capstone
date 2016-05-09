@@ -2,15 +2,20 @@ package com.example.burcakdemircioglu.wannabeer.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.method.LinkMovementMethod;
@@ -26,10 +31,13 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.ui.util.DrawInsetsFrameLayout;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ObservableScrollView;
+
+import java.util.ArrayList;
 
 /**
  * Created by burcakdemircioglu on 21/04/16.
@@ -261,6 +269,19 @@ public class BeerDetailFragment extends Fragment implements
                     else {likeDislikeInteraction=NO_INTERACTION;}
                     bindViews();
                     Toast.makeText(getActivity(), "like", Toast.LENGTH_SHORT).show();
+
+                    ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                    Uri dirUri = BeersContract.LikedItems.buildDirUri();
+                    try {
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.LikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                        Log.e("like",mCursor.getString(InfoLoader.Query.NAME));
+                        getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                    } catch (RemoteException | OperationApplicationException e) {
+                        Log.e(TAG, "Error updating content.", e);
+                    }
                 }
             });
             mDislikeButton.setOnClickListener(new View.OnClickListener() {
@@ -270,6 +291,19 @@ public class BeerDetailFragment extends Fragment implements
                     else {likeDislikeInteraction=NO_INTERACTION;}
                     bindViews();
                     Toast.makeText(getActivity(), "dislike", Toast.LENGTH_SHORT).show();
+
+                    ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                    Uri dirUri = BeersContract.DislikedItems.buildDirUri();
+                    try {
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.DislikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                        Log.e("like",mCursor.getString(InfoLoader.Query.NAME));
+                        getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                    } catch (RemoteException | OperationApplicationException e) {
+                        Log.e(TAG, "Error updating content.", e);
+                    }
                 }
             });
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
