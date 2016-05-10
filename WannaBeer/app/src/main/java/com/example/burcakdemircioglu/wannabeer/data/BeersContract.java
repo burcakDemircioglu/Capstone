@@ -79,6 +79,10 @@ public class BeersContract {
         public static Uri buildItemUri(long _id) {
             return BASE_URI.buildUpon().appendPath("likeditems").appendPath(Long.toString(_id)).build();
         }
+        /** Matches: /items/name/ */
+        public static Uri buildItemUri(String name) {
+            return BASE_URI.buildUpon().appendPath("likeditems").appendPath(name).build();
+        }
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {
             return Long.parseLong(itemUri.getPathSegments().get(1));
@@ -99,6 +103,10 @@ public class BeersContract {
         /** Matches: /items/[_id]/ */
         public static Uri buildItemUri(long _id) {
             return BASE_URI.buildUpon().appendPath("dislikeditems").appendPath(Long.toString(_id)).build();
+        }
+        /** Matches: /items/name/ */
+        public static Uri buildItemUri(String name) {
+            return BASE_URI.buildUpon().appendPath("dislikeditems").appendPath(name).build();
         }
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {

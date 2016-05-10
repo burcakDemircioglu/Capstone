@@ -1,11 +1,12 @@
 package com.example.burcakdemircioglu.wannabeer.ui;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
+import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -32,7 +33,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
+import com.example.burcakdemircioglu.wannabeer.data.DislikedBeersLoader;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.data.LikedBeersLoader;
 import com.example.burcakdemircioglu.wannabeer.ui.util.DrawInsetsFrameLayout;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 import com.example.burcakdemircioglu.wannabeer.ui.util.ObservableScrollView;
@@ -50,7 +53,11 @@ public class BeerDetailFragment extends Fragment implements
     private static final float PARALLAX_FACTOR = 1.25f;
 
     private Cursor mCursor;
+    private Cursor mCursorLiked;
+    private Cursor mCursorDisliked;
+
     private long mItemId;
+    private String mItemName;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
@@ -77,7 +84,7 @@ public class BeerDetailFragment extends Fragment implements
 
     private int mStartingPosition;
     private int mPosition;
-
+private Activity activity=getActivity();
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -136,6 +143,8 @@ public class BeerDetailFragment extends Fragment implements
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
         getLoaderManager().initLoader(0, null, this);
+
+
     }
 
     @Override
@@ -262,6 +271,7 @@ public class BeerDetailFragment extends Fragment implements
                 mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
                 mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
             }
+
             mLikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -353,8 +363,13 @@ public class BeerDetailFragment extends Fragment implements
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return InfoLoader.newInstanceForItemId(getActivity(), mItemId);
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+        if(id==0)
+            return InfoLoader.newInstanceForItemId(getActivity(), mItemId);
+        else if(id==1)
+            return LikedBeersLoader.newInstanceForItemName(getActivity(), mItemName);
+        else
+            return DislikedBeersLoader.newInstanceForItemName(getActivity(),mItemName);
     }
 
     @Override
@@ -366,11 +381,39 @@ public class BeerDetailFragment extends Fragment implements
             return;
         }
 
-        mCursor = cursor;
-        if (mCursor != null && !mCursor.moveToFirst()) {
-            Log.e(TAG, "Error reading item detail cursor");
-            mCursor.close();
-            mCursor = null;
+        if(cursorLoader.getId()==0) {
+            mCursor = cursor;
+            if (mCursor != null && !mCursor.moveToFirst()) {
+                Log.e(TAG, "Error reading item detail cursor");
+                mCursor.close();
+                mCursor = null;
+            }
+            if(mCursor!=null) {
+                mItemName = mCursor.getString(InfoLoader.Query.NAME);
+                Log.e("onLoadFinished",mItemName);
+                getLoaderManager().initLoader(1, null, this);
+                getLoaderManager().initLoader(2, null, this);
+            }
+        }
+        if(cursorLoader.getId()==1) {
+            mCursorLiked = cursor;
+            if (mCursorLiked != null && !mCursorLiked.moveToFirst()) {
+                Log.e(TAG, "Error reading item detail cursor");
+                mCursorLiked.close();
+                mCursorLiked = null;
+            }
+            if(mCursorLiked!=null)
+                likeDislikeInteraction=LIKE;
+        }
+        if(cursorLoader.getId()==2) {
+            mCursorDisliked = cursor;
+            if (mCursorDisliked != null && !mCursorDisliked.moveToFirst()) {
+                Log.e(TAG, "Error reading item detail cursor");
+                mCursorDisliked.close();
+                mCursorDisliked = null;
+            }
+            if(mCursorDisliked!=null)
+                likeDislikeInteraction=DISLIKE;
         }
 
         bindViews();

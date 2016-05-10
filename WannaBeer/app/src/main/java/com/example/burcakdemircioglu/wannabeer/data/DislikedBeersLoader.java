@@ -12,8 +12,8 @@ public class DislikedBeersLoader extends CursorLoader {
         return new DislikedBeersLoader(context, BeersContract.DislikedItems.buildDirUri());
     }
 
-    public static DislikedBeersLoader newInstanceForItemId(Context context, long itemId) {
-        return new DislikedBeersLoader(context, BeersContract.DislikedItems.buildItemUri(itemId));
+    public static DislikedBeersLoader newInstanceForItemName(Context context, String name) {
+        return new DislikedBeersLoader(context, BeersContract.DislikedItems.buildItemUri(name));
     }
 
 

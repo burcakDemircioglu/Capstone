@@ -2,13 +2,13 @@ package com.example.burcakdemircioglu.wannabeer.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.LoaderManager;
+import android.support.v4.app.LoaderManager;
 import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
+import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        getLoaderManager().initLoader(0, null, this);
+        getSupportLoaderManager().initLoader(0, null,  this);
 
         if (savedInstanceState == null) {
             refresh();

@@ -32,9 +32,11 @@ public class BeersProvider extends ContentProvider
         private static final int ITEMS__ID = 1;
         private static final int KIND=2;
 
-        private static final int LIKEDITEMS=3;
-        private static final int DISLIKEDITEMS=4;
 
+        private static final int LIKEDITEMS_ID=3;
+        private static final int DISLIKEDITEMS_ID=4;
+        private static final int LIKEDITEMS=5;
+        private static final int DISLIKEDITEMS=6;
         private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
@@ -43,6 +45,8 @@ public class BeersProvider extends ContentProvider
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
         matcher.addURI(authority, "items/kinds/*", KIND);
+        matcher.addURI(authority, "likeditems/*", LIKEDITEMS_ID);
+        matcher.addURI(authority, "dislikeditems/*", DISLIKEDITEMS_ID);
         matcher.addURI(authority, "likeditems", LIKEDITEMS);
         matcher.addURI(authority, "dislikeditems", DISLIKEDITEMS);
         return matcher;
@@ -68,6 +72,10 @@ public class BeersProvider extends ContentProvider
                 return BeersContract.LikedItems.CONTENT_TYPE;
             case DISLIKEDITEMS:
                 return BeersContract.DislikedItems.CONTENT_TYPE;
+            case LIKEDITEMS_ID:
+                return BeersContract.LikedItems.CONTENT_ITEM_TYPE;
+            case DISLIKEDITEMS_ID:
+                return BeersContract.DislikedItems.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -151,6 +159,14 @@ public class BeersProvider extends ContentProvider
             }
             case DISLIKEDITEMS: {
                 return builder.table(Tables.DISLIKEDITEMS);
+            }
+            case LIKEDITEMS_ID: {
+                final String name=paths.get(1);
+                return builder.table(Tables.LIKEDITEMS).where(BeersContract.LikedItems.BEER_NAME + "=?", name);
+            }
+            case DISLIKEDITEMS_ID: {
+                final String name=paths.get(1);
+                return builder.table(Tables.DISLIKEDITEMS).where(BeersContract.DislikedItems.BEER_NAME + "=?", name);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
