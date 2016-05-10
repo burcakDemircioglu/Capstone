@@ -34,12 +34,12 @@ public class BeersDatabase extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + Tables.LIKEDITEMS + " ("
                 + BeersContract.FavoritesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BeersContract.FavoritesColumns.BEER_NAME + " TEXT NOT NULL"
+                + BeersContract.FavoritesColumns.BEER_NAME + " TEXT UNIQUE ON CONFLICT REPLACE"
                 + ")" );
 
         db.execSQL("CREATE TABLE " + Tables.DISLIKEDITEMS + " ("
                 + BeersContract.FavoritesColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BeersContract.FavoritesColumns.BEER_NAME + " TEXT NOT NULL"
+            + BeersContract.FavoritesColumns.BEER_NAME + " TEXT UNIQUE ON CONFLICT REPLACE"
                 + ")" );
     }
 

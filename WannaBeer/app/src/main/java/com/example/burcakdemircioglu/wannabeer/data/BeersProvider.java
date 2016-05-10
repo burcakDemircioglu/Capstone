@@ -7,6 +7,7 @@ import android.content.ContentValues;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
@@ -103,14 +104,26 @@ public class BeersProvider extends ContentProvider
                 return BeersContract.Items.buildItemUri(_id);
             }
             case LIKEDITEMS:{
-                final long _id = db.insertOrThrow(Tables.LIKEDITEMS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return BeersContract.LikedItems.buildItemUri(_id);
+                try {
+                    final long _id = db.insertOrThrow(Tables.LIKEDITEMS, null, values);
+                    getContext().getContentResolver().notifyChange(uri, null);
+                    return BeersContract.LikedItems.buildItemUri(_id);
+                }catch (SQLiteConstraintException e){
+                    return BeersContract.LikedItems.buildItemUri(0);
+
+                }
+
             }
             case DISLIKEDITEMS:{
-                final long _id = db.insertOrThrow(Tables.DISLIKEDITEMS, null, values);
-                getContext().getContentResolver().notifyChange(uri, null);
-                return BeersContract.DislikedItems.buildItemUri(_id);
+                try {
+                    final long _id = db.insertOrThrow(Tables.DISLIKEDITEMS, null, values);
+                    getContext().getContentResolver().notifyChange(uri, null);
+                    return BeersContract.DislikedItems.buildItemUri(_id);
+                }catch (SQLiteConstraintException e){
+                    return BeersContract.DislikedItems.buildItemUri(0);
+
+                }
+
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
