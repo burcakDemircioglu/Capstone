@@ -275,45 +275,92 @@ private Activity activity=getActivity();
             mLikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (likeDislikeInteraction!=LIKE) likeDislikeInteraction=LIKE;
-                    else {likeDislikeInteraction=NO_INTERACTION;}
-                    bindViews();
-                    Toast.makeText(getActivity(), "like", Toast.LENGTH_SHORT).show();
-
                     ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
                     Uri dirUri = BeersContract.LikedItems.buildDirUri();
-                    try {
-                        ContentValues values = new ContentValues();
-                        values.put(BeersContract.LikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+                    ContentValues values = new ContentValues();
+                    values.put(BeersContract.LikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+
+                    if (likeDislikeInteraction==NO_INTERACTION) {
+                        likeDislikeInteraction=LIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" added to Like Table");
+                    }
+                    else if (likeDislikeInteraction==DISLIKE) {
+                        likeDislikeInteraction=LIKE;
                         cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("like",mCursor.getString(InfoLoader.Query.NAME));
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" added to Like Table");
+
+                        Uri dirUriDislike = BeersContract.DislikedItems.buildDirUri();
+
+                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
+                        cpo.add(ContentProviderOperation.newDelete(dirUriDislike).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"deleted from Dislike Table");
+                    }
+                    else {
+                        likeDislikeInteraction=NO_INTERACTION;
+                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
+                        cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" deleted from Like Table");
+
+
+                    }
+                    try {
                         getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
 
-                    } catch (RemoteException | OperationApplicationException e) {
+                    }catch (RemoteException | OperationApplicationException e) {
                         Log.e(TAG, "Error updating content.", e);
                     }
+
+                    bindViews();
+                    Toast.makeText(getActivity(), "Added to lov'd List", Toast.LENGTH_SHORT).show();
+
+
                 }
             });
             mDislikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(likeDislikeInteraction!=DISLIKE)likeDislikeInteraction=DISLIKE;
-                    else {likeDislikeInteraction=NO_INTERACTION;}
-                    bindViews();
-                    Toast.makeText(getActivity(), "dislike", Toast.LENGTH_SHORT).show();
-
                     ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
                     Uri dirUri = BeersContract.DislikedItems.buildDirUri();
-                    try {
-                        ContentValues values = new ContentValues();
-                        values.put(BeersContract.DislikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+                    ContentValues values = new ContentValues();
+                    values.put(BeersContract.DislikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
+
+                    if(likeDislikeInteraction==NO_INTERACTION){
+                        likeDislikeInteraction=DISLIKE;
                         cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("like",mCursor.getString(InfoLoader.Query.NAME));
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"added to Dislike Table");
+                        Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else if(likeDislikeInteraction==LIKE){
+                        likeDislikeInteraction=DISLIKE;
+                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"added to Dislike Table");
+                        Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                        Uri dirUriLike = BeersContract.LikedItems.buildDirUri();
+
+                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
+                        cpo.add(ContentProviderOperation.newDelete(dirUriLike).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" deleted from Like Table");
+
+                    }
+                    else {
+                        likeDislikeInteraction=NO_INTERACTION;
+                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
+                        cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"deleted from Dislike Table");
+
+                    }
+
+                    try {
                         getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
 
                     } catch (RemoteException | OperationApplicationException e) {
                         Log.e(TAG, "Error updating content.", e);
                     }
+
+                    bindViews();
                 }
             });
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()

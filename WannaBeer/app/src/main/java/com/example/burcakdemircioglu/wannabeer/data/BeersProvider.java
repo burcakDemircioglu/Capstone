@@ -147,6 +147,7 @@ public class BeersProvider extends ContentProvider
         return builder.where(selection, selectionArgs).delete(db);
     }
 
+
     private SelectionBuilder buildSelection(Uri uri) {
         final SelectionBuilder builder = new SelectionBuilder();
         final int match = sUriMatcher.match(uri);
