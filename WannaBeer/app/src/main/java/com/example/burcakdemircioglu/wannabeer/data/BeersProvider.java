@@ -33,15 +33,12 @@ public class BeersProvider extends ContentProvider
 
         private static final int ITEMS = 0;
         private static final int ITEMS__ID = 1;
-        private static final int ITEMS__NAME = 7;
-
         private static final int KIND=2;
-
-
         private static final int LIKEDITEMS_ID=3;
         private static final int DISLIKEDITEMS_ID=4;
         private static final int LIKEDITEMS=5;
         private static final int DISLIKEDITEMS=6;
+        private static final int ITEMS__NAME = 7;
         private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
@@ -49,12 +46,12 @@ public class BeersProvider extends ContentProvider
         final String authority = BeersContract.CONTENT_AUTHORITY;
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
-        matcher.addURI(authority, "items/*", ITEMS__NAME);
         matcher.addURI(authority, "items/kinds/*", KIND);
         matcher.addURI(authority, "likeditems/*", LIKEDITEMS_ID);
         matcher.addURI(authority, "dislikeditems/*", DISLIKEDITEMS_ID);
         matcher.addURI(authority, "likeditems", LIKEDITEMS);
         matcher.addURI(authority, "dislikeditems", DISLIKEDITEMS);
+        matcher.addURI(authority, "items/*", ITEMS__NAME);
         return matcher;
     }
 
@@ -175,6 +172,7 @@ public class BeersProvider extends ContentProvider
 
     private SelectionBuilder buildSelection(Uri uri, int match, SelectionBuilder builder) {
         final List<String> paths = uri.getPathSegments();
+
         switch (match) {
             case ITEMS: {
                 return builder.table(Tables.ITEMS);
@@ -183,12 +181,12 @@ public class BeersProvider extends ContentProvider
                 final String _id = paths.get(1);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items._ID + "=?", _id);
             }
-            /*
+
             case ITEMS__NAME: {
                 final String name = paths.get(1);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items.NAME + "=?", name);
             }
-            */
+
             case KIND:{
                 final String kind=paths.get(2);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items.KIND+ "=?",kind);
