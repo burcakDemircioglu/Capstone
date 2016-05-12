@@ -1,16 +1,21 @@
 package com.example.burcakdemircioglu.wannabeer.ui.favorites;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.BeersProvider;
+import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.ui.BeerDetailActivityWithoutPager;
 import com.example.burcakdemircioglu.wannabeer.ui.adapters.BeerDislikedListAdapter;
 
 
@@ -34,7 +39,7 @@ public class dislike_tab extends Fragment{
         return mRootView;
     }
 
-    private void bindViews(Cursor mCursor) {
+    private void bindViews(final Cursor mCursor) {
         if (mRootView == null) {
             return;
         }
@@ -45,7 +50,7 @@ public class dislike_tab extends Fragment{
             mRootView.animate().alpha(1);
             ListView beerList=(ListView) mRootView.findViewById(R.id.categories_detail_list_view);
 
-            /*
+
             beerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
@@ -53,11 +58,11 @@ public class dislike_tab extends Fragment{
                     mCursor.moveToPosition(position);
                     Intent intent=new Intent(getActivity(), BeerDetailActivityWithoutPager.class);
                     intent.putExtra("ItemId", mCursor.getLong(InfoLoader.Query._ID));
-                    //BeersContract.Items.buildItemUri(mCursor.getInt(InfoLoader.Query._ID)));
+                    Log.e("ItemIdFromFavorites", String.valueOf(mCursor.getLong(InfoLoader.Query._ID+1)));
                     startActivity(intent);
                 }
             });
-            */
+
             BeerDislikedListAdapter beerAdapter=new BeerDislikedListAdapter(getActivity(), mCursor);
             beerList.setAdapter(beerAdapter);
 
