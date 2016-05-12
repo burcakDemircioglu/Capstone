@@ -54,6 +54,10 @@ public class BeersContract {
         public static Uri buildItemUri(long _id) {
             return BASE_URI.buildUpon().appendPath("items").appendPath(Long.toString(_id)).build();
         }
+        /** Matches: /items/[_id]/ */
+        public static Uri buildItemUri(String name) {
+            return BASE_URI.buildUpon().appendPath("items").appendPath(name).build();
+        }
         public static Uri buildKindUri(String kind) {
             return BASE_URI.buildUpon().appendPath("items").appendPath("kinds").appendPath(kind).build();
         }

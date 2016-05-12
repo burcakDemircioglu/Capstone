@@ -14,6 +14,8 @@ import java.util.HashMap;
  */
 public class SelectionBuilder {
     private String mTable = null;
+    private String mTable2 = null;
+
     private HashMap<String, String> mProjectionMap;
     private StringBuilder mSelection;
     private ArrayList<String> mSelectionArgs;
@@ -66,8 +68,15 @@ public class SelectionBuilder {
         return this;
     }
 
+
     public SelectionBuilder table(String table) {
         mTable = table;
+        return this;
+    }
+    public SelectionBuilder tables(String table, String table2) {
+        mTable = table;
+        mTable2 = table2;
+
         return this;
     }
 

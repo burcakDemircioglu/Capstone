@@ -2,6 +2,9 @@ package com.example.burcakdemircioglu.wannabeer.ui.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +12,11 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.data.LikedBeersLoader;
+import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
+import com.example.burcakdemircioglu.wannabeer.ui.util.ImageLoaderHelper;
 
 /**
  * Created by burcakdemircioglu on 10/05/16.
@@ -39,9 +45,9 @@ public class BeerLikedListAdapter extends CursorAdapter {
         holder.nameView = (TextView) view.findViewById(R.id.beer_name);
         holder.countryView = (TextView) view.findViewById(R.id.beer_country);
         holder.imageView=(ImageView) view.findViewById(R.id.beer_logo);
-        /*
+
         ImageLoaderHelper.getInstance(activity).getImageLoader()
-                .get(cursor.getString(InfoLoader.Query.PHOTO), new ImageLoader.ImageListener() {
+                .get(cursor.getString(InfoLoader.Query.PHOTO+1), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                         Bitmap bitmap = imageContainer.getBitmap();
@@ -57,10 +63,10 @@ public class BeerLikedListAdapter extends CursorAdapter {
 
                     }
                 });
-                */
+
         // Extract properties from cursor
-        String name = cursor.getString(LikedBeersLoader.Query.BEER_NAME);
-        String country = cursor.getString(LikedBeersLoader.Query.BEER_NAME);
+        String name = cursor.getString(InfoLoader.Query.NAME+1);
+        String country = cursor.getString(InfoLoader.Query.COUNTRY+1);
         // Populate fields with extracted properties
         holder.nameView.setText(name);
         holder.countryView.setText(String.valueOf(country));

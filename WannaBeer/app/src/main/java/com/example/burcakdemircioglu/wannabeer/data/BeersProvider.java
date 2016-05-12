@@ -1,5 +1,6 @@
 package com.example.burcakdemircioglu.wannabeer.data;
 
+import android.app.Activity;
 import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
@@ -11,6 +12,7 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +33,8 @@ public class BeersProvider extends ContentProvider
 
         private static final int ITEMS = 0;
         private static final int ITEMS__ID = 1;
+        private static final int ITEMS__NAME = 7;
+
         private static final int KIND=2;
 
 
@@ -45,6 +49,7 @@ public class BeersProvider extends ContentProvider
         final String authority = BeersContract.CONTENT_AUTHORITY;
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
+        matcher.addURI(authority, "items/*", ITEMS__NAME);
         matcher.addURI(authority, "items/kinds/*", KIND);
         matcher.addURI(authority, "likeditems/*", LIKEDITEMS_ID);
         matcher.addURI(authority, "dislikeditems/*", DISLIKEDITEMS_ID);
@@ -66,6 +71,8 @@ public class BeersProvider extends ContentProvider
             case ITEMS:
                 return BeersContract.Items.CONTENT_TYPE;
             case ITEMS__ID:
+                return BeersContract.Items.CONTENT_ITEM_TYPE;
+            case ITEMS__NAME:
                 return BeersContract.Items.CONTENT_ITEM_TYPE;
             case KIND:
                 return BeersContract.Items.CONTENT_ITEM_TYPE;
@@ -89,6 +96,18 @@ public class BeersProvider extends ContentProvider
         Cursor cursor = builder.where(selection, selectionArgs).query(db, projection, sortOrder);
         if (cursor != null) {
             cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        }
+        return cursor;
+    }
+    public Cursor queryJOIN(Activity activity, String table1, String table2, String table1Column, String table2Column) {
+        if(mOpenHelper==null) mOpenHelper = new BeersDatabase(activity);
+
+        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final String MY_QUERY = "SELECT * FROM "+table1+" INNER JOIN "+table2+" ON "+table1+"."+table1Column+"="+table2+"."+table2Column;
+
+        Cursor cursor=db.rawQuery(MY_QUERY,new String[]{});
+        if (cursor != null) {
+            Log.e("queryJOIN", "cursor is null");
         }
         return cursor;
     }
@@ -164,15 +183,21 @@ public class BeersProvider extends ContentProvider
                 final String _id = paths.get(1);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items._ID + "=?", _id);
             }
+            /*
+            case ITEMS__NAME: {
+                final String name = paths.get(1);
+                return builder.table(Tables.ITEMS).where(BeersContract.Items.NAME + "=?", name);
+            }
+            */
             case KIND:{
                 final String kind=paths.get(2);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items.KIND+ "=?",kind);
             }
             case LIKEDITEMS: {
-                return builder.table(Tables.LIKEDITEMS);
+                return builder.tables(Tables.LIKEDITEMS, Tables.ITEMS);
             }
             case DISLIKEDITEMS: {
-                return builder.table(Tables.DISLIKEDITEMS);
+                return builder.tables(Tables.DISLIKEDITEMS, Tables.ITEMS);
             }
             case LIKEDITEMS_ID: {
                 final String name=paths.get(1);

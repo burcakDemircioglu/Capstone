@@ -15,6 +15,9 @@ public class InfoLoader extends CursorLoader {
     public static InfoLoader newInstanceForItemId(Context context, long itemId) {
         return new InfoLoader(context, BeersContract.Items.buildItemUri(itemId));
     }
+    public static InfoLoader newInstanceForItemName(Context context, String itemName) {
+        return new InfoLoader(context, BeersContract.Items.buildItemUri(itemName));
+    }
 
     public static InfoLoader newInstanceForKind(Context context, String kind) {
         return new InfoLoader(context, BeersContract.Items.buildKindUri(kind));
