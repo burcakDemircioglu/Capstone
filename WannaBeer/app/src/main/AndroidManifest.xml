@@ -58,15 +58,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
         </activity>
-        <activity
-            android:name=".ui.categories.CategoriesActivity"
-            android:label="@string/title_activity_categories"
-            android:parentActivityName=".ui.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
-        </activity>
+
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -97,11 +89,35 @@
         <activity
             android:name=".ui.BeerDetailActivityWithoutPager"
             android:label="@string/title_activity_beer_detail_activity_without_pager"
-            android:parentActivityName=".ui.categories.CategoriesDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+        android:name=".ui.categories.CategoriesActivity"
+        android:label="@string/title_activity_categories"
+        android:parentActivityName=".ui.MainActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
+    </activity>
+        <activity
+            android:name=".ui.CountriesActivity"
+            android:label="@string/title_activity_countries"
+            android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesDetailActivity" />
+                android:value="com.example.burcakdemircioglu.wannabeer.ui.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ui.CountryDetailActivity"
+            android:label="@string/title_activity_categories_detail"
+            android:parentActivityName=".ui.CountriesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.CountriesActivity" />
         </activity>
     </application>
 
