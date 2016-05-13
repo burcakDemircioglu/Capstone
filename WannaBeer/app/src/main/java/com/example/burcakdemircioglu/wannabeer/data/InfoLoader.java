@@ -23,6 +23,10 @@ public class InfoLoader extends CursorLoader {
         return new InfoLoader(context, BeersContract.Items.buildKindUri(kind));
     }
 
+    public static InfoLoader newInstanceForCountry(Context context, String country) {
+        return new InfoLoader(context, BeersContract.Items.buildCountryUri(country));
+    }
+
     private InfoLoader(Context context, Uri uri) {
         super(context, uri, Query.PROJECTION, null, null, BeersContract.Items.DEFAULT_SORT);
     }

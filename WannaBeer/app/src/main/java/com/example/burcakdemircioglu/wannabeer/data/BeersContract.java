@@ -62,6 +62,10 @@ public class BeersContract {
             return BASE_URI.buildUpon().appendPath("items").appendPath("kinds").appendPath(kind).build();
         }
 
+        public static Uri buildCountryUri(String country) {
+            return BASE_URI.buildUpon().appendPath("items").appendPath("country").appendPath(country).build();
+        }
+
         /** Read item ID item detail URI. */
         public static long getItemId(Uri itemUri) {
             return Long.parseLong(itemUri.getPathSegments().get(1));

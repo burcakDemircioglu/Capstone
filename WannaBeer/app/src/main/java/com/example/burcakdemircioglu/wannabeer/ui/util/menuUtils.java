@@ -11,10 +11,11 @@ import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.example.burcakdemircioglu.wannabeer.R;
-import com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesActivity;
-import com.example.burcakdemircioglu.wannabeer.ui.favorites.FavoritesActivity;
+import com.example.burcakdemircioglu.wannabeer.ui.CountriesActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.MainActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.SettingsActivity;
+import com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesActivity;
+import com.example.burcakdemircioglu.wannabeer.ui.favorites.FavoritesActivity;
 
 /**
  * Created by burcakdemircioglu on 26/04/16.
@@ -67,6 +68,11 @@ public abstract class menuUtils {
 
                 if(menuItem.getTitle().toString().equals(res.getString(R.string.navigation_categories))){
                     Intent intent=new Intent(activity, CategoriesActivity.class);
+                    activity.startActivity(intent);
+                }
+
+                if(menuItem.getTitle().toString().equals(res.getString(R.string.navigation_countries))){
+                    Intent intent=new Intent(activity, CountriesActivity.class);
                     activity.startActivity(intent);
                 }
 

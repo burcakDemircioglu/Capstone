@@ -39,6 +39,8 @@ public class BeersProvider extends ContentProvider
         private static final int LIKEDITEMS=5;
         private static final int DISLIKEDITEMS=6;
         private static final int ITEMS__NAME = 7;
+        private static final int COUNTRY = 8;
+
         private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static UriMatcher buildUriMatcher() {
@@ -47,6 +49,7 @@ public class BeersProvider extends ContentProvider
         matcher.addURI(authority, "items", ITEMS);
         matcher.addURI(authority, "items/#", ITEMS__ID);
         matcher.addURI(authority, "items/kinds/*", KIND);
+        matcher.addURI(authority, "items/country/*", COUNTRY);
         matcher.addURI(authority, "likeditems/*", LIKEDITEMS_ID);
         matcher.addURI(authority, "dislikeditems/*", DISLIKEDITEMS_ID);
         matcher.addURI(authority, "likeditems", LIKEDITEMS);
@@ -172,6 +175,8 @@ public class BeersProvider extends ContentProvider
 
     private SelectionBuilder buildSelection(Uri uri, int match, SelectionBuilder builder) {
         final List<String> paths = uri.getPathSegments();
+        Log.e("buildselection", String.valueOf(match));
+        Log.e("buildselection", String.valueOf(uri));
 
         switch (match) {
             case ITEMS: {
@@ -190,6 +195,11 @@ public class BeersProvider extends ContentProvider
             case KIND:{
                 final String kind=paths.get(2);
                 return builder.table(Tables.ITEMS).where(BeersContract.Items.KIND+ "=?",kind);
+            }
+            case COUNTRY:{
+                Log.e("Provider", "country sorgusu");
+                final String country=paths.get(2);
+                return builder.table(Tables.ITEMS).where(BeersContract.Items.COUNTRY+ "=?",country);
             }
             case LIKEDITEMS: {
                 return builder.tables(Tables.LIKEDITEMS, Tables.ITEMS);
