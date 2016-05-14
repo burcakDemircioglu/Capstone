@@ -2,17 +2,17 @@ package com.example.burcakdemircioglu.wannabeer.ui;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.support.v4.app.LoaderManager;
 import android.app.SharedElementCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v4.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.burcakdemircioglu.wannabeer.AlarmReceiver;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
@@ -105,12 +106,14 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 Intent intent=new Intent(activity, SearchActivity.class);
                 startActivity(intent);
+
             }
         });
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
-
+        AlarmReceiver alarm=new AlarmReceiver();
+        alarm.scheduleServiceUpdates(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         getSupportLoaderManager().initLoader(0, null,  this);
 
@@ -118,11 +121,6 @@ public class MainActivity extends AppCompatActivity implements
             refresh();
         }
     }
-
-
-
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

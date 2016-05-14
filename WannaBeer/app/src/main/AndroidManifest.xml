@@ -119,6 +119,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.CountriesActivity" />
         </activity>
+
+        <receiver android:name=".AlarmReceiver"/>
+        <service android:name=".NotifyService"/>
     </application>
 
 </manifest>
