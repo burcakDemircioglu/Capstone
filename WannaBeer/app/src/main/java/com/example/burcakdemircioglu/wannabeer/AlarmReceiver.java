@@ -33,7 +33,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // compute first call time 1 minute from now
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, 1);
+        //calendar.add(Calendar.MINUTE, 1);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.SECOND, 00);
+
         long trigger = calendar.getTimeInMillis();
 
         // set delay between each call : 24 Hours
