@@ -54,7 +54,7 @@ public class BeersProvider extends ContentProvider
         matcher.addURI(authority, "dislikeditems/*", DISLIKEDITEMS_ID);
         matcher.addURI(authority, "likeditems", LIKEDITEMS);
         matcher.addURI(authority, "dislikeditems", DISLIKEDITEMS);
-        matcher.addURI(authority, "items/*", ITEMS__NAME);
+        matcher.addURI(authority, "items/name/*", ITEMS__NAME);
         return matcher;
     }
 
@@ -188,8 +188,8 @@ public class BeersProvider extends ContentProvider
             }
 
             case ITEMS__NAME: {
-                final String name = paths.get(1);
-                return builder.table(Tables.ITEMS).where(BeersContract.Items.NAME + "=?", name);
+                final String name = paths.get(2);
+                return builder.table(Tables.ITEMS).where(BeersContract.Items.NAME + " LIKE ?", name+"%");
             }
 
             case KIND:{

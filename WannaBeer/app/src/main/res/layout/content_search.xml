@@ -7,26 +7,5 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:layout="@layout/fragment_search" >
-<FrameLayout
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    >
-    <EditText
-        android:id="@+id/search_beer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Write a beer name"
-        android:inputType="text"
-        android:imeOptions="actionSearch"
-        />
-<ImageButton
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="10dp"
-    android:layout_gravity="right|center_vertical"
 
-    android:background="@android:drawable/ic_delete"/>
-
-
-</FrameLayout>
     </fragment>

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,14 @@ public class BeerListAdapter extends CursorAdapter {
     Context activity;
     public BeerListAdapter(Context context, Cursor cursor) {
         super(context, cursor, 0);
+
+        if(cursor==null)
+            Log.e("BeerListAdapter","cursor is null");
+        else {
+            Log.e("BeerListAdapter", "cursor is not null"+String.valueOf(cursor.getCount()));
+
+        }
+
         activity=context;
     }
 
@@ -40,6 +49,8 @@ public class BeerListAdapter extends CursorAdapter {
     // such as setting the text on a TextView.
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        Log.e("ListAdapter","in bind view");
+
         // Find fields to populate in inflated template
         final BeerListItemViewHolder holder=new BeerListItemViewHolder();
         holder.nameView = (TextView) view.findViewById(R.id.beer_name);
