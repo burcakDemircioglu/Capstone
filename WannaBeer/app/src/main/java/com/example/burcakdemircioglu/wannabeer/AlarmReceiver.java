@@ -36,7 +36,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         //calendar.add(Calendar.MINUTE, 1);
 
         calendar.set(Calendar.HOUR_OF_DAY, 17);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.MINUTE,00);
         calendar.set(Calendar.SECOND, 00);
 
         long trigger = calendar.getTimeInMillis();
