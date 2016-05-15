@@ -11,6 +11,8 @@ import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.ui.util.menuUtils;
 
 public class SearchActivity extends AppCompatActivity {
+    private boolean mTwoPane;
+    private static final String DETAILFRAGMENT_TAG="TLTAG";
 
     private Toolbar mToolbar;
     private DrawerLayout drawerLayout;
@@ -19,7 +21,17 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
+        if(findViewById(R.id.tracks_container)!=null){
+            mTwoPane=true;
+            if(savedInstanceState==null){
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.tracks_container, new BeerDetailActivityWithoutPagerFragment(),DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+        }
+        else{
+            mTwoPane=false;
+        }
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -39,4 +51,5 @@ public class SearchActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

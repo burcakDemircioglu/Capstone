@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.Editable;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.burcakdemircioglu.wannabeer.R;
+import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.ui.adapters.BeerListAdapter;
 
@@ -24,7 +27,7 @@ import com.example.burcakdemircioglu.wannabeer.ui.adapters.BeerListAdapter;
  * A placeholder fragment containing a simple view.
  */
 public class SearchActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-
+    Boolean mTwoPane;
     View mRootView;
     ListView mBeerList;
     EditText mEditText;
@@ -76,17 +79,43 @@ public class SearchActivityFragment extends Fragment implements LoaderManager.Lo
             mRootView.setAlpha(0);
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
-            mBeerList=(ListView) mRootView.findViewById(R.id.listView1);
-
+            mBeerList=(ListView) mRootView.findViewById(R.id.search_listView);
+            if (getActivity().findViewById(R.id.tracks_container) != null)
+                mTwoPane = true;
+            else
+                mTwoPane = false;
             mBeerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
                     mCursor.moveToPosition(position);
-                    Intent intent=new Intent(getActivity(), BeerDetailActivityWithoutPager.class);
-                    intent.putExtra("ItemId", mCursor.getLong(InfoLoader.Query._ID));
-                    //BeersContract.Items.buildItemUri(mCursor.getInt(InfoLoader.Query._ID)));
-                    startActivity(intent);
+
+                    if (mTwoPane) {
+                        FragmentManager fm = getFragmentManager();
+                        FragmentTransaction ft = fm.beginTransaction();
+
+                        Bundle args = new Bundle();
+
+                        args.putString(BeersContract.Items.NAME, mCursor.getString(InfoLoader.Query.NAME));
+                        args.putString(BeersContract.Items.KIND, mCursor.getString(InfoLoader.Query.KIND));
+                        args.putString(BeersContract.Items.COUNTRY, mCursor.getString(InfoLoader.Query.COUNTRY));
+                        args.putString(BeersContract.Items.ALCOHOL_PERCENTAGE, mCursor.getString(InfoLoader.Query.ALCOHOL_PERCENTAGE));
+                        args.putString(BeersContract.Items.LOCATION, mCursor.getString(InfoLoader.Query.LOCATION));
+                        args.putString(BeersContract.Items.DESCRIPTION, mCursor.getString(InfoLoader.Query.DESCRIPTION));
+                        args.putString(BeersContract.Items.BOTTLE, mCursor.getString(InfoLoader.Query.BOTTLE));
+
+                        BeerDetailActivityWithoutPagerFragment fragment = new BeerDetailActivityWithoutPagerFragment();
+                        fragment.setArguments(args);
+                        ft.replace(R.id.tracks_container, fragment)
+                                .commit();
+                    } else {
+
+                        Intent intent=new Intent(getActivity(), BeerDetailActivityWithoutPager.class);
+                        intent.putExtra("ItemId", mCursor.getLong(InfoLoader.Query._ID));
+                        //BeersContract.Items.buildItemUri(mCursor.getInt(InfoLoader.Query._ID)));
+                        startActivity(intent);
+                    }
+
                 }
             });
 

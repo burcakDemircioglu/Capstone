@@ -29,7 +29,7 @@ public class CategoriesActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView= inflater.inflate(R.layout.fragment_categories, container, false);
 
-        final ListView list=(ListView)rootView.findViewById(R.id.listView1);
+        final ListView list=(ListView)rootView.findViewById(R.id.search_listView);
 
         adapter=new CategoryTitlesAdapter(getActivity(), CategoriesActivity.categories, getResources());
 

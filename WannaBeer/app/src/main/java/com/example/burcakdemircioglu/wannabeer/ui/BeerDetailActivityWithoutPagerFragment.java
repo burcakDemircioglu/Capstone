@@ -48,6 +48,8 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>{
     private static final String TAG = "BeerDetailFragment";
 
+    private boolean mTwoPane;
+
     private Cursor mCursor;
     private Cursor mCursorLiked;
     private Cursor mCursorDisliked;
@@ -65,10 +67,10 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
     private ImageButton mLikeButton;
     private ImageButton mDislikeButton;
 
-    private int likeDislikeInteraction;
     private static final int LIKE=0;
     private static final int DISLIKE=1;
     private static final int NO_INTERACTION =2;
+    private int likeDislikeInteraction=NO_INTERACTION;
 
     private int mMutedColor = 0xFF333333;
     private ObservableScrollView mScrollView;
@@ -77,6 +79,8 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
     private int mScrollY;
     private boolean mIsCard = false;
     private int mStatusBarFullOpacityBottom;
+
+    private Bundle mArguments;
     public BeerDetailActivityWithoutPagerFragment() {
     }
     @Override
@@ -87,7 +91,6 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
         // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
-        getLoaderManager().initLoader(0, null, this);
     }
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -114,6 +117,19 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView=inflater.inflate(R.layout.fragment_beer_detail_activity_without_pager, container, false);
+
+        if (getActivity().findViewById(R.id.search_listView) != null) {
+            mTwoPane = true;
+            mArguments = getArguments();
+            if (mArguments != null) {
+                mItemName = mArguments.getString(BeersContract.Items.NAME);
+                getLoaderManager().initLoader(1, null, this);
+                getLoaderManager().initLoader(2, null, this);
+            }
+        }else{
+            mTwoPane = false;
+            getLoaderManager().initLoader(0, null, this);
+        }
         mDrawInsetsFrameLayout = (DrawInsetsFrameLayout)
                 mRootView.findViewById(R.id.draw_insets_frame_layout);
         mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
@@ -151,7 +167,7 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Did you tried the beer "+ mCursor.getString(InfoLoader.Query.NAME) + "? Found it on #WannaBeer =)")
+                        .setText("Did you tried the beer "+ mItemName + "? Found it on #WannaBeer =)")
                         .getIntent(), getString(R.string.action_share)));
             }
         });
@@ -168,8 +184,8 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
 
         TextView titleView = (TextView) mRootView.findViewById(R.id.article_title);
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
-        TextView locationView=(TextView) mRootView.findViewById(R.id.article_location);
-        TextView countryView=(TextView)mRootView.findViewById(R.id.article_country);
+        TextView locationView = (TextView) mRootView.findViewById(R.id.article_location);
+        TextView countryView = (TextView) mRootView.findViewById(R.id.article_country);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
@@ -177,169 +193,295 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
         titleView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
         bylineView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
         countryView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Light.ttf"));
-        mFlagView=(ImageView)mRootView.findViewById(R.id.article_country_flag);
+        mFlagView = (ImageView) mRootView.findViewById(R.id.article_country_flag);
 
-        if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
-            titleView.setText(mCursor.getString(InfoLoader.Query.NAME));
-            countryView.setText(mCursor.getString(InfoLoader.Query.COUNTRY));
-            String byLine=mCursor.getString(InfoLoader.Query.KIND)+" - "+mCursor.getString(InfoLoader.Query.ALCOHOL_PERCENTAGE)+"%";
-            bylineView.setText(byLine);
+        if (likeDislikeInteraction==LIKE) {
+            mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button_filter));
+            mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
 
-            bodyView.setText(mCursor.getString(InfoLoader.Query.DESCRIPTION));
-            String location= "Location: "+mCursor.getString(InfoLoader.Query.LOCATION);
-            locationView.setText(location);
-            if (likeDislikeInteraction==LIKE){
-                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button_filter));
-                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
-
-            }
-            else if(likeDislikeInteraction==DISLIKE){
-                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
-                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button_filter));
-            }
-            else{
-                mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
-                mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
-            }
-
-            mLikeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
-                    Uri dirUri = BeersContract.LikedItems.buildDirUri();
-                    ContentValues values = new ContentValues();
-                    values.put(BeersContract.LikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
-
-                    if (likeDislikeInteraction==NO_INTERACTION) {
-                        likeDislikeInteraction=LIKE;
-                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" added to Like Table");
-                    }
-                    else if (likeDislikeInteraction==DISLIKE) {
-                        likeDislikeInteraction=LIKE;
-                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" added to Like Table");
-
-                        Uri dirUriDislike = BeersContract.DislikedItems.buildDirUri();
-
-                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
-                        cpo.add(ContentProviderOperation.newDelete(dirUriDislike).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"deleted from Dislike Table");
-                    }
-                    else {
-                        likeDislikeInteraction=NO_INTERACTION;
-                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
-                        cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" deleted from Like Table");
-
-
-                    }
-                    try {
-                        getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
-
-                    }catch (RemoteException | OperationApplicationException e) {
-                        Log.e(TAG, "Error updating content.", e);
-                    }
-
-                    bindViews();
-                    Toast.makeText(getActivity(), "Added to lov'd List", Toast.LENGTH_SHORT).show();
-
-
-                }
-            });
-            mDislikeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
-                    Uri dirUri = BeersContract.DislikedItems.buildDirUri();
-                    ContentValues values = new ContentValues();
-                    values.put(BeersContract.DislikedItems.BEER_NAME, mCursor.getString(InfoLoader.Query.NAME));
-
-                    if(likeDislikeInteraction==NO_INTERACTION){
-                        likeDislikeInteraction=DISLIKE;
-                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"added to Dislike Table");
-                        Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
-
-                    }
-                    else if(likeDislikeInteraction==LIKE){
-                        likeDislikeInteraction=DISLIKE;
-                        cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"added to Dislike Table");
-                        Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
-
-                        Uri dirUriLike = BeersContract.LikedItems.buildDirUri();
-
-                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
-                        cpo.add(ContentProviderOperation.newDelete(dirUriLike).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+" deleted from Like Table");
-
-                    }
-                    else {
-                        likeDislikeInteraction=NO_INTERACTION;
-                        String[] args = new String[] {mCursor.getString(InfoLoader.Query.NAME)};
-                        cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
-                        Log.e("LikeDislikeButtons",mCursor.getString(InfoLoader.Query.NAME)+"deleted from Dislike Table");
-
-                    }
-
-                    try {
-                        getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
-
-                    } catch (RemoteException | OperationApplicationException e) {
-                        Log.e(TAG, "Error updating content.", e);
-                    }
-
-                    bindViews();
-                }
-            });
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(mCursor.getString(InfoLoader.Query.BOTTLE), new ImageLoader.ImageListener() {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                Palette p = Palette.generate(bitmap, 12);
-                                mMutedColor = p.getDarkMutedColor(0xFF333333);
-                                mPhotoView.setImageBitmap(imageContainer.getBitmap());
-                                mRootView.findViewById(R.id.meta_bar)
-                                        .setBackgroundColor(mMutedColor);
-                                updateStatusBar();
-                            }
-                        }
-
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
-                        }
-                    });
-
-            String flagURL= "https://dl.dropboxusercontent.com/u/58097303/wannabeer/images/flags/"+mCursor.getString(InfoLoader.Query.COUNTRY)+".png";
-            ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
-                    .get(flagURL, new ImageLoader.ImageListener() {
-                        @Override
-                        public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                            Bitmap bitmap = imageContainer.getBitmap();
-                            if (bitmap != null) {
-                                mFlagView.setImageBitmap(imageContainer.getBitmap());
-                                updateStatusBar();
-                            }
-                        }
-
-                        @Override
-                        public void onErrorResponse(VolleyError volleyError) {
-
-                        }
-                    });
+        } else if (likeDislikeInteraction == DISLIKE) {
+            mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
+            mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button_filter));
         } else {
+            mLikeButton.setImageDrawable(getResources().getDrawable(R.drawable.like_button));
+            mDislikeButton.setImageDrawable(getResources().getDrawable(R.drawable.dislike_button));
+        }
+
+         String name="";
+         String beerKind="";
+         String beerAlcoholPercentage="";
+         String beerCountry="";
+         String beerDescription="";
+         String beerLocation="";
+         String beerBottle="";
+        if(!mTwoPane){
+            if (mCursor != null) {
+                name=mCursor.getString(InfoLoader.Query.NAME);
+                final String beerName=name;
+                beerKind=mCursor.getString(InfoLoader.Query.KIND);
+                beerAlcoholPercentage=mCursor.getString(InfoLoader.Query.ALCOHOL_PERCENTAGE);
+                beerCountry=mCursor.getString(InfoLoader.Query.COUNTRY);
+                beerDescription=mCursor.getString(InfoLoader.Query.DESCRIPTION);
+                beerLocation=mCursor.getString(InfoLoader.Query.LOCATION);
+                beerBottle=mCursor.getString(InfoLoader.Query.BOTTLE);
+
+                mRootView.setAlpha(0);
+                mRootView.setVisibility(View.VISIBLE);
+                mRootView.animate().alpha(1);
+
+                mLikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                        Uri dirUri = BeersContract.LikedItems.buildDirUri();
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.LikedItems.BEER_NAME, beerName);
+
+                        if (likeDislikeInteraction == NO_INTERACTION) {
+                            likeDislikeInteraction = LIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + " added to Like Table");
+                        } else if (likeDislikeInteraction == DISLIKE) {
+                            likeDislikeInteraction = LIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + " added to Like Table");
+
+                            Uri dirUriDislike = BeersContract.DislikedItems.buildDirUri();
+
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUriDislike).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + "deleted from Dislike Table");
+                        } else {
+                            likeDislikeInteraction = NO_INTERACTION;
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + " deleted from Like Table");
+
+
+                        }
+                        try {
+                            getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                        } catch (RemoteException | OperationApplicationException e) {
+                            Log.e(TAG, "Error updating content.", e);
+                        }
+
+                        bindViews();
+                        Toast.makeText(getActivity(), "Added to lov'd List", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                mDislikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                        Uri dirUri = BeersContract.DislikedItems.buildDirUri();
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.DislikedItems.BEER_NAME, beerName);
+
+                        if (likeDislikeInteraction == NO_INTERACTION) {
+                            likeDislikeInteraction = DISLIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + "added to Dislike Table");
+                            Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                        } else if (likeDislikeInteraction == LIKE) {
+                            likeDislikeInteraction = DISLIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + "added to Dislike Table");
+                            Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                            Uri dirUriLike = BeersContract.LikedItems.buildDirUri();
+
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUriLike).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + " deleted from Like Table");
+
+                        } else {
+                            likeDislikeInteraction = NO_INTERACTION;
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + "deleted from Dislike Table");
+
+                        }
+
+                        try {
+                            getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                        } catch (RemoteException | OperationApplicationException e) {
+                            Log.e(TAG, "Error updating content.", e);
+                        }
+
+                        bindViews();
+                    }
+                });
+            } else {
+                mRootView.setVisibility(View.GONE);
+                titleView.setText("N/A");
+                bylineView.setText("N/A");
+                bodyView.setText("N/A");
+            }
+        }
+        else{
+            if(mArguments!=null){
+                name=mArguments.getString(BeersContract.Items.NAME);
+                final String beerName=name;
+                beerKind=mArguments.getString(BeersContract.Items.KIND);
+                beerAlcoholPercentage=mArguments.getString(BeersContract.Items.ALCOHOL_PERCENTAGE);
+                beerCountry=mArguments.getString(BeersContract.Items.COUNTRY);
+                beerDescription=mArguments.getString(BeersContract.Items.DESCRIPTION);
+                beerLocation=mArguments.getString(BeersContract.Items.LOCATION);
+                beerBottle=mArguments.getString(BeersContract.Items.BOTTLE);
+
+                mRootView.setAlpha(0);
+                mRootView.setVisibility(View.VISIBLE);
+                mRootView.animate().alpha(1);
+
+                mLikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                        Uri dirUri = BeersContract.LikedItems.buildDirUri();
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.LikedItems.BEER_NAME, beerName);
+
+                        if (likeDislikeInteraction == NO_INTERACTION) {
+                            likeDislikeInteraction = LIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + " added to Like Table");
+                        } else if (likeDislikeInteraction == DISLIKE) {
+                            likeDislikeInteraction = LIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + " added to Like Table");
+
+                            Uri dirUriDislike = BeersContract.DislikedItems.buildDirUri();
+
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUriDislike).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + "deleted from Dislike Table");
+                        } else {
+                            likeDislikeInteraction = NO_INTERACTION;
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + " deleted from Like Table");
+
+
+                        }
+                        try {
+                            getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                        } catch (RemoteException | OperationApplicationException e) {
+                            Log.e(TAG, "Error updating content.", e);
+                        }
+
+                        bindViews();
+                        Toast.makeText(getActivity(), "Added to lov'd List", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                mDislikeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<ContentProviderOperation> cpo = new ArrayList<ContentProviderOperation>();
+                        Uri dirUri = BeersContract.DislikedItems.buildDirUri();
+                        ContentValues values = new ContentValues();
+                        values.put(BeersContract.DislikedItems.BEER_NAME, beerName);
+
+                        if (likeDislikeInteraction == NO_INTERACTION) {
+                            likeDislikeInteraction = DISLIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + "added to Dislike Table");
+                            Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                        } else if (likeDislikeInteraction == LIKE) {
+                            likeDislikeInteraction = DISLIKE;
+                            cpo.add(ContentProviderOperation.newInsert(dirUri).withValues(values).build());
+                            Log.e("LikeDislikeButtons", beerName + "added to Dislike Table");
+                            Toast.makeText(getActivity(), "Added to meh.. List", Toast.LENGTH_SHORT).show();
+
+                            Uri dirUriLike = BeersContract.LikedItems.buildDirUri();
+
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUriLike).withSelection(BeersContract.LikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + " deleted from Like Table");
+
+                        } else {
+                            likeDislikeInteraction = NO_INTERACTION;
+                            String[] args = new String[]{beerName};
+                            cpo.add(ContentProviderOperation.newDelete(dirUri).withSelection(BeersContract.DislikedItems.BEER_NAME + "=?", args).build());
+                            Log.e("LikeDislikeButtons", beerName + "deleted from Dislike Table");
+
+                        }
+
+                        try {
+                            getActivity().getContentResolver().applyBatch(BeersContract.CONTENT_AUTHORITY, cpo);
+
+                        } catch (RemoteException | OperationApplicationException e) {
+                            Log.e(TAG, "Error updating content.", e);
+                        }
+
+                        bindViews();
+                    }
+                });
+            } else {
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
-            bylineView.setText("N/A" );
+            bylineView.setText("N/A");
             bodyView.setText("N/A");
         }
+        }
+
+        titleView.setText(name);
+        countryView.setText(beerCountry);
+        String byLine = beerKind + " - " + beerAlcoholPercentage + "%";
+        bylineView.setText(byLine);
+
+        bodyView.setText(beerDescription);
+        String location= "Location: "+beerLocation;
+        locationView.setText(location);
+
+
+        ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+                .get(beerBottle, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                        Bitmap bitmap = imageContainer.getBitmap();
+                        if (bitmap != null) {
+                            Palette p = Palette.generate(bitmap, 12);
+                            mMutedColor = p.getDarkMutedColor(0xFF333333);
+                            mPhotoView.setImageBitmap(imageContainer.getBitmap());
+                            mRootView.findViewById(R.id.meta_bar)
+                                    .setBackgroundColor(mMutedColor);
+                            updateStatusBar();
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                });
+
+        String flagURL = "https://dl.dropboxusercontent.com/u/58097303/wannabeer/images/flags/" + beerCountry + ".png";
+        ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
+                .get(flagURL, new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                        Bitmap bitmap = imageContainer.getBitmap();
+                        if (bitmap != null) {
+                            mFlagView.setImageBitmap(imageContainer.getBitmap());
+                            updateStatusBar();
+                        }
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                });
+
     }
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -381,7 +523,7 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
                 mCursorLiked.close();
                 mCursorLiked = null;
             }
-            if(mCursorLiked!=null)
+            if(mCursorLiked != null && mCursorLiked.getCount()!=0)
                 likeDislikeInteraction=LIKE;
         }
         if(cursorLoader.getId()==2) {
@@ -391,7 +533,7 @@ public class BeerDetailActivityWithoutPagerFragment extends Fragment implements
                 mCursorDisliked.close();
                 mCursorDisliked = null;
             }
-            if(mCursorDisliked!=null)
+            if(mCursorDisliked!=null && mCursorDisliked.getCount()!=0)
                 likeDislikeInteraction=DISLIKE;
         }
 
