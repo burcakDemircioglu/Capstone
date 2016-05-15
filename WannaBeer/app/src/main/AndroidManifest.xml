@@ -120,8 +120,8 @@
                 android:value=".ui.CountriesActivity" />
         </activity>
 
-        <receiver android:name=".AlarmReceiver"/>
-        <service android:name=".NotifyService"/>
+        <receiver android:name=".notification.AlarmReceiver"/>
+        <service android:name=".notification.NotifyService"/>
     </application>
 
 </manifest>

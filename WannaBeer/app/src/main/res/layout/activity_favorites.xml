@@ -39,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="0dp"
+                    app:tabMaxWidth="0dp"
 
                     android:layout_marginTop="143dp"
                     android:layout_height="wrap_content"

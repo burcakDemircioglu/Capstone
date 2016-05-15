@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.ui.CountriesActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.MainActivity;
-import com.example.burcakdemircioglu.wannabeer.ui.SettingsActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.categories.CategoriesActivity;
 import com.example.burcakdemircioglu.wannabeer.ui.favorites.FavoritesActivity;
 
@@ -75,11 +74,12 @@ public abstract class menuUtils {
                     Intent intent=new Intent(activity, CountriesActivity.class);
                     activity.startActivity(intent);
                 }
-
+/*
                 if(menuItem.getTitle().toString().equals(res.getString(R.string.navigation_settings))){
                     Intent intent=new Intent(activity, SettingsActivity.class);
                     activity.startActivity(intent);
                 }
+                */
                 menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return true;

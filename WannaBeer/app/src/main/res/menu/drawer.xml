@@ -24,11 +24,11 @@
             android:id="@+id/drawer_countries"
             android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/navigation_countries"/>
-
+<!--
         <item
             android:id="@+id/drawer_settings"
             android:icon="@android:drawable/ic_menu_preferences"
             android:title="@string/navigation_settings"/>
-
+-->
     </group>
 </menu>

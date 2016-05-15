@@ -1,4 +1,4 @@
-package com.example.burcakdemircioglu.wannabeer;
+package com.example.burcakdemircioglu.wannabeer.notification;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v4.content.Loader;
 import android.util.Log;
 
+import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
 import com.example.burcakdemircioglu.wannabeer.ui.MainActivity;
 

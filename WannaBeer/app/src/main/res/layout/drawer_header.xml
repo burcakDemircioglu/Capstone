@@ -15,23 +15,6 @@
         android:elevation="4dp"
         tools:src="@drawable/bannerbackground"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/email"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="30dp"
-        android:text="username@mymail.com"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
 
 </RelativeLayout>

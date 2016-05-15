@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.burcakdemircioglu.wannabeer.AlarmReceiver;
+import com.example.burcakdemircioglu.wannabeer.notification.AlarmReceiver;
 import com.example.burcakdemircioglu.wannabeer.R;
 import com.example.burcakdemircioglu.wannabeer.data.BeersContract;
 import com.example.burcakdemircioglu.wannabeer.data.InfoLoader;
