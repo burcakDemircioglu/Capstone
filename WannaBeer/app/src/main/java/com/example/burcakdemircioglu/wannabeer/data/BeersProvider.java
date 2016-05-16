@@ -5,6 +5,7 @@ import android.content.ContentProvider;
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -101,6 +102,19 @@ public class BeersProvider extends ContentProvider
     }
     public Cursor queryJOIN(Activity activity, String table1, String table2, String table1Column, String table2Column) {
         if(mOpenHelper==null) mOpenHelper = new BeersDatabase(activity);
+
+        final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        final String MY_QUERY = "SELECT * FROM "+table1+" INNER JOIN "+table2+" ON "+table1+"."+table1Column+"="+table2+"."+table2Column;
+
+        Cursor cursor=db.rawQuery(MY_QUERY,new String[]{});
+        if (cursor != null) {
+            Log.e("queryJOIN", "cursor is null");
+        }
+        return cursor;
+    }
+
+    public Cursor queryJOIN(Context context, String table1, String table2, String table1Column, String table2Column) {
+        if(mOpenHelper==null) mOpenHelper = new BeersDatabase(context);
 
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
         final String MY_QUERY = "SELECT * FROM "+table1+" INNER JOIN "+table2+" ON "+table1+"."+table1Column+"="+table2+"."+table2Column;
