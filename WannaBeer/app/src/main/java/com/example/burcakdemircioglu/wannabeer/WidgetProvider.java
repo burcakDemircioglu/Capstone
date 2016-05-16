@@ -13,7 +13,7 @@ import android.widget.RemoteViews;
 public class WidgetProvider extends AppWidgetProvider {
 
     /*
-     * called every 30 mins as specified on widgetinfo.xml
+     * called every 30 mins as specified on widget_info.xml
      * called on every phone reboot
      */
     @Override

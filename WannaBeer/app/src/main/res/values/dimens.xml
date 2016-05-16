@@ -29,4 +29,16 @@
 
     <dimen name="detail_body_top_margin">16dp</dimen>
 
+    <dimen name="favorites_tab_layout_top_margin">143dp</dimen>
+    <dimen name="favorites_tab_layout_left_margin">0dp</dimen>
+    <dimen name="favorites_tab_layout_right_margin">0dp</dimen>
+    <dimen name="favorites_tab_layout_elevation">4dp</dimen>
+
+    <dimen name="favorites_profile_image_top_margin">90dp</dimen>
+    <dimen name="favorites_profile_image_elevation">6dp</dimen>
+
+    <dimen name="back_button_left_margin">10dp</dimen>
+    <dimen name="back_button_top_margin">10dp</dimen>
+    <dimen name="back_button_width">30dp</dimen>
+    <dimen name="back_button_height">30dp</dimen>
 </resources>
