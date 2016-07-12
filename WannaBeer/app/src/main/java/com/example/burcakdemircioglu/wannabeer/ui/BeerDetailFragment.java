@@ -430,12 +430,12 @@ private Activity activity=getActivity();
 
         if(cursorLoader.getId()==0) {
             mCursor = cursor;
-            if (mCursor != null && !mCursor.moveToFirst()) {
-                Log.e(TAG, "Error reading item detail cursor");
-                mCursor.close();
-                mCursor = null;
+            if(mCursor!=null && !mCursor.moveToFirst()) {
+                getLoaderManager().initLoader(0, null, this);
+                Log.e("onLoadFinished", "error reading cursor");
             }
-            if(mCursor!=null) {
+            if(mCursor!=null && mCursor.getCount()!=0) {
+                mCursor.moveToFirst();
                 mItemName = mCursor.getString(InfoLoader.Query.NAME);
                 Log.e("onLoadFinished",mItemName);
                 getLoaderManager().initLoader(1, null, this);
@@ -444,22 +444,14 @@ private Activity activity=getActivity();
         }
         if(cursorLoader.getId()==1) {
             mCursorLiked = cursor;
-            if (mCursorLiked != null && !mCursorLiked.moveToFirst()) {
-                Log.e(TAG, "Error reading item detail cursor");
-                mCursorLiked.close();
-                mCursorLiked = null;
+            if(mCursorLiked!=null && mCursor.getCount()!=0) {
+                likeDislikeInteraction = LIKE;
+
             }
-            if(mCursorLiked!=null)
-                likeDislikeInteraction=LIKE;
         }
         if(cursorLoader.getId()==2) {
             mCursorDisliked = cursor;
-            if (mCursorDisliked != null && !mCursorDisliked.moveToFirst()) {
-                Log.e(TAG, "Error reading item detail cursor");
-                mCursorDisliked.close();
-                mCursorDisliked = null;
-            }
-            if(mCursorDisliked!=null)
+            if(mCursorDisliked!=null && mCursor.getCount()!=0)
                 likeDislikeInteraction=DISLIKE;
         }
 
